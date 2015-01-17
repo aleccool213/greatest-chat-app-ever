@@ -75,6 +75,16 @@ body {
 	border-radius: 2px;
 }
 
+.friend-item:hover {
+	cursor: pointer;
+	cursor: hand;
+}
+
+.friend-item:hover .see-greetings-button {
+	opacity: 0.3;
+	transition: opacity 250ms ease-in-out;
+}
+
 .see-greetings-button {
 	float: right;
 	background: none;
@@ -83,7 +93,7 @@ body {
 	transition: opacity 250ms ease-in-out;
 }
 
-.see-greetings-button:hover {
+.friend-item .see-greetings-button:hover {
 	opacity: 1;
 	transition: opacity 250ms ease-in-out;
 }
