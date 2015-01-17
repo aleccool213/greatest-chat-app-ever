@@ -18,7 +18,8 @@
 	<p> List of all users: </p>
 	<ul>
 		{{#each userInCollection}}
-		    <li>test</li>
+			<img src="{{services.twitter.profile_image_url}}" >
+		    <li>{{profile.name}} (@{{services.twitter.screenName}})</li>
 		{{/each}}
 	</ul>
 </template>
