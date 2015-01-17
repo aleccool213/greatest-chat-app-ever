@@ -35,7 +35,12 @@ body {
 }
 .greeting {
 		padding: 5px;
-		border-bottom: 1px solid gray;
+		border: 1px solid gray;
+		border-radius: 5px;
+		margin-bottom: 3px;
+		margin-left: 3px;
+		margin-right: 3px;
+		margin-top: 7px;
 }
 .greeting p {
 		padding-left: 15px;
@@ -66,12 +71,23 @@ body {
 		height: 400px;
 }
 .friend-reply {
-		padding: 5px;
+		border: 1px solid black;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		padding-left: 10px;
+		border-radius: 3px;
 		background-color: #fff;
+		margin-top: 3px;
+		margin-left: 10px;
 }
 .user-reply {
-		padding: 5px;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		border: 1px solid black;
+		border-radius: 3px;
 		padding-left: 20px;
+		margin-top: 3px;
+		margin-left: 5px;
 }
 .header {
 	padding: 5px;
