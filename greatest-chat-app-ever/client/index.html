@@ -86,9 +86,13 @@
 
 <template name="greeting">
 	<li>
+		<div id="ownerID" style="display: none;">{{owner.id}}</div>
+		
 		<img src="{{owner.services.twitter.profile_image_url}}">
 		{{ owner.profile.name }}
-		{{ content }}
+		<div id="greetingContent">
+			{{ content }}
+		</div>
 		{{prettifyDate dateCreated }}
 		<hr>
 	</li>

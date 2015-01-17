@@ -70,6 +70,13 @@ if (Meteor.isClient) {
             }
         }
     })
+
+    //new chat when user clicks content of a greeting
+    Template.greeting.events({
+        "click #greetingContent": function(event){
+            Meteor.call('newChat', $('#ownerID').val());
+        }
+    })
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
@@ -115,6 +122,10 @@ if (Meteor.isClient) {
 
         addMessage: function(chatRoomID, messageContent) {
             messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
+        },
+
+        newChat: function(userID){
+            console.log(userID);
         }
         
 
