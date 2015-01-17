@@ -33,8 +33,10 @@ if (Meteor.isClient) {
 
     Template.greetingList.helpers({
         greetings: function() {
-            return greetings.find({},{sort: {dateCreated: -1}});
+            console.log(greetings.find({},{sort: {dateCreated: -1}}).fetch());
+            return greetings.find({},{sort: {dateCreated: -1}}).fetch();
         }
+
     })
 
     // Template.chatRoom.events({
@@ -94,7 +96,6 @@ if (Meteor.isClient) {
             // console.log(friendToAdd)
 
             if (friendToAdd.length == 1) {
-
                 if (user_settings.find({ id: Meteor.userId() }).fetch().length > 0) {
                     user_settings.update({ id: Meteor.userId() }, { $addToSet: { friendList: friendToAddId }});
                     console.log(user_settings.find().fetch());
@@ -108,12 +109,14 @@ if (Meteor.isClient) {
         },
 
         addGreeting: function(greetingContent) {
-            greetings.insert({ content: greetingContent, dateCreated: new Date(), owner: Meteor.userId() })
+            var ownerObject = Meteor.users.find({ _id: Meteor.userId() }).fetch()[0];
+            greetings.insert({ content: greetingContent, dateCreated: new Date(), owner: ownerObject })
         },
 
         addMessage: function(chatRoomID, messageContent) {
             messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
         }
+        
 
 
     });
