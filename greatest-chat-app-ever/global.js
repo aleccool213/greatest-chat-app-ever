@@ -46,7 +46,39 @@ if (Meteor.isClient) {
     //         }
     //     },
     // });
+Template.userChatMessageIn.events({
+        "submit .new-message": function(){
 
+            var message = event.target.chatText.value;
+            console.log("message submitted:"+message);
+            messages.insert({
+
+                owner: Meteor.user(),                
+                userMessages: message,
+                dateCreated: new Date(),
+                currChatRoom: ""
+
+
+            });
+
+            //Clear Form
+            event.target.chatText.value = "";
+
+            return false
+
+        }
+    });
+
+
+ Template.chatRoomMessages.helpers({
+            chatMessages: function(){
+                var chatMessages = []
+                var messagesArray = messages.find({}).fetch()
+
+                return messagesArray;
+            }
+                
+    });
 // =======================================
 // TEMPLATE EVENTS
 // =======================================
