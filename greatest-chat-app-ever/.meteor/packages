@@ -9,3 +9,6 @@ autopublish
 insecure
 bootstrap
 joncursi:socket-io-client
+accounts-ui
+accounts-password
+accounts-twitter
