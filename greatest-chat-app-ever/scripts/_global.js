@@ -13,6 +13,7 @@ if (Meteor.isClient) {
         friends: function() {
             var friendObjects = []
             var friendIdArray = Meteor.userSettings.find({ _id: Meteor.userId }, { friendList: true });
+
             for (i = 0; i < friendIdArray.length; i++) {
                 friendObjects.push(Meteor.users.find({ _id: friendIdArray[i] }));
             }
@@ -30,15 +31,29 @@ if (Meteor.isClient) {
     });
 }
 
-if (Meteor.isServer) {
-    Meteor.startup(function () {
-    // code to run on server at startup
+Template.greeting.events({
+"submit: .new-greeting": postGreeting(event){
 
-    });
+  var greeting = event.target.text.value;
+
+  Greeting.insert({
+    content: greeting,
+    dateCreated = new Date()
+    owner = Meteor.userId
+  });
+
+  // Clear Form
+  event.target.text.value = "";
+
+  //Prevent default form submission
+
+  return false
+  }
+  return Greeting.find({},{sort: {dateCreated: -1}});
+  
 
 
-}
-
+});
 
 
 
