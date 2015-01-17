@@ -12,6 +12,7 @@
   {{> hello}}
   {{> listOfOverallUsers}}
   {{> addFriend}}
+  {{> tempList}}
 </body>
 
 
@@ -37,6 +38,14 @@
 			{{> friend}}
 		{{/each}}
 	</ul>
+</template>
+
+<template name="tempList">
+	<p>
+	{{#each tempUser}}
+		{{_id}}
+	{{/each}}
+	</p>
 </template>
 
 <template name="addFriend">
