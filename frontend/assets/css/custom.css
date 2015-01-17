@@ -15,13 +15,12 @@ body {
 
 	margin: 5px;
 
-	border: 2px solid black;
 	background-color: #fff;
 }
 	.friend {
 		padding: 5px;
 
-		border-bottom: 2px solid black;
+		border-bottom: 1px solid gray;
 	}
 
 .feed {
@@ -32,41 +31,33 @@ body {
 
 	margin: 5px;
 
-	border: 2px solid black;
 	background-color: #fff;
 }
-	.greeting {
+.greeting {
 		padding: 5px;
-
-		border-bottom: 2px solid black;
-	}
-	.greeting p {
+		border-bottom: 1px solid gray;
+}
+.greeting p {
 		padding-left: 15px;
-	}
+}
 
 .conversations {
-	float: left;
-
-	width: 600px;
-	height: 600px;
-
-	margin: 5px;
-
-	border: 2px solid black;
-}
-	.open-convos {
 		float: left;
-
+		width: 600px;
+		height: 600px;
+		margin: 5px;
+}
+.open-convos {
+		float: left;
 		width: 200px;
 		height: 596px;
-
 		border-right: 2px solid black;
 		background-color: #fff;
-	}
+}
 		.last-said {
 			padding: 5px;
 
-			border-bottom: 2px solid black;
+			border-bottom: 1px solid gray;
 		}
 		.last-said p {
 			padding-left: 15px;

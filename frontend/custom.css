@@ -15,13 +15,13 @@ body {
 
 	margin: 5px;
 
-	border: 2px solid black;
+	border: 1px solid gray; /* hardcode */
 	background-color: #fff;
 }
 	.friend {
 		padding: 5px;
 
-		border-bottom: 2px solid black;
+		border-bottom: 1px solid gray;
 	}
 
 .feed {
@@ -38,7 +38,7 @@ body {
 	.greeting {
 		padding: 5px;
 
-		border-bottom: 2px solid black;
+		border-bottom: 1px solid gray;
 	}
 	.greeting p {
 		padding-left: 15px;
