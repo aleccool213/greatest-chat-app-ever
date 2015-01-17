@@ -42,7 +42,46 @@ if (Meteor.isClient) {
     //         }
     //     },
     // });
+Template.userChatMessageIn.events({
+        "submit .userMessage": function(){
 
+            var message = event.target.chatText.value;
+            console.log("message submitted:"+message);
+            messages.insert({
+
+                owner: Meteor.userId(),                
+                userMessages: message,
+                dateCreated: new Date(),
+                currChatRoom: chatRoomID
+
+
+            });
+
+            //Clear Form
+            event.target.chatText.value = "";
+
+            return false
+
+        }
+    });
+
+ Template.sentMessages.helpers({
+        pullSentMessages: function(){
+            return messages.find();
+        }
+    });
+
+ Template.chatRoomMessages.helpers({
+            chatRoomMessages: function(currChatRoom){
+                var chatMessages = []
+                var messagesArray = messages.find({chatRoomId: currChatRoom}).fetch()
+
+                for (i = 0; i < messagesArray.length; i++){
+                    chatMessages.push(messages.find({_id: messagesArray[i] }));
+                }
+            }
+                
+    });
 // =======================================
 // TEMPLATE EVENTS
 // =======================================
