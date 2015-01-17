@@ -21,19 +21,13 @@ if (Meteor.isClient) {
         }
     }); 
 
-<<<<<<< HEAD
     Template.chatRoom.events({
-        "keyup .chat-input" : function(event) {
+        "keyup .message-input" : function(event) {
             if (event.which == 13 && !event.shiftKey) {
-                chatRoom.insert({ parent: this._id, dateCreated: new Date(), owner: Meteor.userId });
+                Meteor.call('addMessage', this._id, $(".message-input").val())
             }
         },
     });
-=======
-
-
-
->>>>>>> FETCH_HEAD
 }
 
 if (Meteor.isServer) {
@@ -54,8 +48,9 @@ Meteor.methods({
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-
-
+  },
+  addMessage: function(chatRoomID, messageContent) {
+    messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId });
   }
 
 
