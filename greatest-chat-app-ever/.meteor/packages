@@ -12,3 +12,4 @@ joncursi:socket-io-client
 accounts-ui
 accounts-password
 accounts-twitter
+momentjs:moment

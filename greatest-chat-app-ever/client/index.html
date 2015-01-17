@@ -1,0 +1,99 @@
+<head>
+  <title>greatest-chat-app-ever</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+  {{#if currentUser}}
+  	<p> You are logged in! </p>
+  {{else}}
+  	<p> You are not logged in! </p>
+  {{/if}}
+  {{> hello}}
+  {{> listOfOverallUsers}}
+
+  {{> friendList}}
+
+  {{> greetingList}}
+</body>
+
+
+<template name="hello">
+	{{> loginButtons}}
+</template>
+
+<template name="listOfOverallUsers">
+	<p> List of all users: </p>
+	<ul>
+		{{#each userInCollection}}
+			<img src="{{services.twitter.profile_image_url}}" >
+		    <li>{{profile.name}} (@{{services.twitter.screenName}})</li>
+		{{/each}}
+	</ul>
+</template>
+
+
+
+<template name="friendList">
+	<p>Your friends:</p>
+	<ul>
+		{{#each friends}}
+			{{> friend}}
+		{{/each}}
+	</ul>
+	
+	<button data-toggle="modal" data-target="#addFriendModal">Add Friend +</button>
+	{{> addFriendModalTemplate}}
+</template>
+
+<template name="addFriendModalTemplate">
+	<div id="addFriendModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addFriendModal" aria-hidden="true">
+    	<div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input id="addFriendInput" type="text">
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="friend">
+	<li>
+		<img src="{{services.twitter.profile_image_url}}" style="height: 15px">
+		{{ profile.name }}
+	</li>
+</template>
+
+<template name="greetingList">
+	<p>Greetings:</p>
+	<ul>
+		{{#each greetings}}
+			{{> greeting}}
+		{{/each}}
+	</ul>
+	<button data-toggle="modal" data-target="#addGreetingModal">Write Greeting!</button>
+	{{> addGreetingModalTemplate}}
+</template>
+
+<template name="addGreetingModalTemplate">
+	<div id="addGreetingModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addGreetingModalTemplate" aria-hidden="true">
+    	<div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <input id="addGreetingInput" type="text">
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="greeting">
+	<li>
+		<img src="{{owner.services.twitter.profile_image_url}}">
+		{{ owner.profile.name }}
+		{{ content }}
+		{{prettifyDate dateCreated }}
+		<hr>
+	</li>
+</template>
+
+
+
+

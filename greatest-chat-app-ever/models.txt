@@ -1,6 +1,0 @@
-// CHAT ROOM
-{
-	id: number,
-	modsActivated: [array of mod ids],
-	
-}

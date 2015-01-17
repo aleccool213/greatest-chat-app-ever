@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- 
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
     <title>Greatest Chat App</title>
 
@@ -25,7 +23,10 @@
 
   <body>
 
-    <nav class="navbar navbar-inverse">
+
+
+      
+      <nav class="navbar navbar-inverse">
       <div class="custom-container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -41,48 +42,47 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li class="pull-right">
+              {{> loginButtons}}
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="custom-container">
+    <template name="friend">
+      <img src="{{services.twitter.profile_image_url}}" style="height: 15px">
+      {{profile.name}}
+    </template>
 
-      <div class="friends">
+
+
+    <div class="custom-container">
         <div class="header">
           <strong>Friends</strong>
         </div>
+        {{> friendList}}
+        <template name="friendList">
+          <div class="friends">
+            {{#each friends}}
+              {{> friend}}
+            {{/each}}
+          </div>
 
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
-        <div class="friend">
-          <img src="https://cdn2.iconfinder.com/data/icons/rcons-user/32/male-shadow-fill-circle-512.png" style="height: 15px;" />
-          Friend Name
-        </div>
+        </template>
+
+        <div id="addFriendModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addFriendModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <input id="addFriendInput" type="text">
+              </div>
+            </div>
+          </div>
 
         <div class="footer" style="margin-top: 339px;">
-          <strong>Add Friend</strong>
-          <strong class="pull-right"> + </strong>
+          <button data-toggle="modal" data-target="#addFriendModal">Add Friend +</button>
         </div>
-      </div><!-- /.friends -->
+      
 
       <div class="feed">
         <div class="header">
@@ -259,5 +259,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
-</html>
 
+
+ -->
