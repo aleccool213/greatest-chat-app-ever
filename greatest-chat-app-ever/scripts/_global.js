@@ -1,6 +1,9 @@
+chatRoom = new Mongo.Collection("chat-room");
+messages = new Mongo.Collection("messages");
+greetings = new Mongo.Collection("greetings");
+user_settings = new Mongo.Collection("user-settings");
+
 if (Meteor.isClient) {
-    // counter starts at 0
-    Session.setDefault("counter", 0);
 
     Template.listOfOverallUsers.userInCollection = function(){
         return Meteor.users.find();
@@ -18,6 +21,7 @@ if (Meteor.isClient) {
         }
     }); 
 
+<<<<<<< HEAD
     Template.chatRoom.events({
         "keyup .chat-input" : function(event) {
             if (event.which == 13 && !event.shiftKey) {
@@ -25,6 +29,11 @@ if (Meteor.isClient) {
             }
         },
     });
+=======
+
+
+
+>>>>>>> FETCH_HEAD
 }
 
 if (Meteor.isServer) {
@@ -39,3 +48,15 @@ if (Meteor.isServer) {
 
 
 
+Meteor.methods({
+  addFriend: function (friendID){
+    // Make sure the user is logged in before inserting a task
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+
+
+  }
+
+
+});
