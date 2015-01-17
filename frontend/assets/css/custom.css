@@ -1,5 +1,5 @@
 body {
-	background-color: white;
+	background-color: #F0F0F0;
 }
 
 .custom-container {
@@ -14,7 +14,6 @@ body {
 	height: 600px;
 
 	margin: 5px;
-	border: 1px solid black;
 	background-color: #fff;
 }
 	.friend {
@@ -25,12 +24,9 @@ body {
 
 .feed {
 	float: left;
-
 	width: 300px;
 	height: 600px;
-
 	margin: 5px;
-	border: 1px solid black;
 	background-color: #fff;
 }
 .greeting {
@@ -46,13 +42,11 @@ body {
 		width: 600px;
 		height: 600px;
 		margin: 5px;
-		border: 1px solid black;
 }
 .open-convos {
 		float: left;
 		width: 200px;
 		height: 596px;
-		border-right: 2px solid black;
 		background-color: #fff;
 }
 .last-said {
@@ -80,22 +74,16 @@ body {
 
 .header {
 	padding: 5px;
-	border-bottom: 2px solid black;
-	background-color: #88D8F7;
-	background: #eeeeee;
-	background: -moz-linear-gradient(top, #eeeeee 0%, #cccccc 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
-	background: -webkit-linear-gradient(top, #eeeeee 0%,#cccccc 100%);
-	background: -o-linear-gradient(top, #eeeeee 0%,#cccccc 100%);
-	background: -ms-linear-gradient(top, #eeeeee 0%,#cccccc 100%);
-	background: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+	border-bottom: 1px solid #F3F3F3;
+	background: #ffffff;
+	border-radius: 3px;
+
 }
 
 .footer {
 	padding: 5px;
 	border-top: 2px solid black;
-	background-color: #88D8F7;
+	background-color: white;
 }
 .navbar {
 		border-radius: 0px;
