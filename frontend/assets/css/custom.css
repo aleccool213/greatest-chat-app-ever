@@ -9,7 +9,7 @@ body {
 }
 .friends {
 		float: left;
-		width: 200px;
+		width: 250px;
 		height: 600px;
 		margin: 5px;
 		background-color: #fff;
@@ -18,7 +18,14 @@ body {
 		padding: 5px;
 		border-bottom: 1px solid gray;
 }
-
+.online {
+	background: #65A954;
+	color: white;
+}
+.away {
+	background: #F1CA00;
+	color: white;
+}
 .feed {
 		float: left;
 		width: 300px;
