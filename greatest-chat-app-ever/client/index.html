@@ -3,6 +3,7 @@
 </head>
 
 <body>
+
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -16,13 +17,74 @@
 
   <!-- {{> listOfOverallUsers}} -->
 
-  {{> friendList}}
+  	<div class="flex-wrap main-wrap">
+  		<div class="pillar pillar-friends">
+  			<div class="pillar-header">
+  				Friends <button class= "pillar-button" data-toggle="modal" data-target="#addFriendModal" ><span class="fa fa-plus"></span></button>
+  			</div>
+  			<ul class="pillar-list friend-list">
+  				{{> friendList }}
+  			</ul>
+  		</div>
+  		<div class="pillar pillar-greetings">
+  			<div class="pillar-header">
+  				Greetings <button class="pillar-button" data-toggle="modal" data-target="#addGreetingModal"><span class="fa fa-pencil-square-o"></span></button>
+  			</div>
+  			<ul class="pillar-list greeting-list">
+  				{{> greetingList }}
+  			</ul>
+  		</div>
+  		<div class="pillar pillar-chatroom">
+			<div class="flex-wrap">
+				<div class="pillar-open-chats">
+					<div class="pillar-header minor">
+						Open Chats
+					</div>
+					<ul class="open-chats-list">
+						{{> openChatList }}
+					</ul>
+				</div>
+				<div class="pillar-messages">
+					<div class="pillar-header chat-header">
+  						FIRST LASTNAME {{> chatHeader }}
+  					</div>
+					<ul class="pillar-list messages-list">
+						{{> chatRoomMessages }}
+					</ul>
+					{{> userChatMessageIn }}
+				</div>
 
-  {{> greetingList}}
-  <p>Sent Messages: </p>
-  {{> chatRoomMessages}}
+			</div>
+  		</div>
+  	</div>
+	
+	
+<!-- 	<div class="custom-container">
+		<div class="friends">
+		 	{{> friendList}}
+		</div>
+		<div class="feed">
+		 	{{> greetingList}}
+		 </div>
+		 <div class="conversation">
+		 	<div class="open-convos">
+		 		<div class="header">
+		 			Open Conversations
+		 		</div>
+		 	</div>
+		 	<div class="active-convo">
+		 		<div class="header">Friend Name: </div>
+		 	</div>
+		 	<div class="convo-replies">
+		 		{{> chatRoomMessages}}
+		 		{{> userChatMessageIn}}
+		 	</div>
+		 </div>
+		 		<p>Sent Messages: </p>
+		 	
 
-  {{> userChatMessageIn}}
+		 	
+ 	</div> -->
 </body>
 
 <template name="listOfOverallUsers">
@@ -36,21 +98,18 @@
 </template>
 
 <template name="friendList">
-	<p>Your friends:</p>
-	<ul>
-		{{#each friends}}
-			{{> friend}}
-		{{/each}}
-	</ul>
-	
-	<button data-toggle="modal" data-target="#addFriendModal">Add Friend +</button>
+	{{#each friends}}
+		{{> friend}}
+	{{/each}}
+
 	{{> addFriendModalTemplate}}
 </template>
 
 <template name="friend">
-	<li>
-		<img src="{{services.twitter.profile_image_url_https}}" style="height: 15px">
-		{{ profile.name }} 
+	<li class="friend-item">
+		<img class="avatar" src="{{services.twitter.profile_image_url_https}}" style="height: 15px">
+		<span class="name">{{ profile.name }}</span>
+		<button class="see-greetings-button"><span class="fa fa-star-o"></span></button>
 	</li>
 </template>
 
@@ -65,27 +124,23 @@
 </template>
 
 <template name="greetingList">
-	<p>Greetings:</p>
-	<ul>
-		{{#each greetings}}
-			{{> greeting}}
-		{{/each}}
-	</ul>
-	<button data-toggle="modal" data-target="#addGreetingModal">Write Greeting!</button>
+	
+	{{#each greetings}}
+		{{> greeting}}
+	{{/each}}
+	
 	{{> addGreetingModalTemplate}}
 </template>
 
 <template name="greeting">
-	<li>
-		<div id="ownerID" style="display: none;">{{owner.id}}</div>
+	<li class="greeting-item">
+		<img class="avatar" src="{{ owner.services.twitter.profile_image_url_https }}">
+		<span class="name">{{ owner.profile.name }}</span>
+		<span class="date">{{prettifyDate dateCreated }}</span>
+		<p class="content" id="greetingContent">{{ content }}</p>
 		
-		<img src="{{owner.services.twitter.profile_image_url}}">
-		{{ owner.profile.name }}
-		<div id="greetingContent">
-			{{ content }}
-		</div>
-		{{prettifyDate dateCreated }}
-		<hr>
+
+		<div id="ownerID" style="display: none;">{{owner.id}}</div>
 	</li>
 </template>
 
@@ -100,6 +155,18 @@
 </template>
 
 
+<template name="chatHeader">
+	<!-- return name of other person in the chat -->
+</template>
+
+<template name="openChatList">
+	<!-- return list of all the open chats -->
+</template>
+
+<template name="openChat">
+	<!-- each individual open chat item -->
+</template>
+
 <template name="chatRoomMessages">
 	{{#each chatMessages}}
 		{{> sentMessage}}
@@ -107,18 +174,19 @@
 </template> 
 
 <template name ="sentMessage">
-	<ul>
-		 <li>
-	 		{{owner.profile.name}}
-	 		{{userMessages}}
-	 		{{prettifyDate dateCreated}}
-		 </li>
-	</ul>
+	 <div class = "user-reply">
+	 	<img class="avatar" src="{{owner.services.twitter.profile_image_url_https}}">
+	 	<span class="name">{{owner.profile.name}}</span>
+	 	<span class="date">{{prettifyDate dateCreated}}</span>
+ 		<p class="content">{{userMessages}}</p>
+ 		
+ 		
+	 </div>
 </template>
 
 <template name ="userChatMessageIn">
 	<form class="new-message">
-			<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
+		<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
 	</form>
 </template>
 

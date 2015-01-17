@@ -7,10 +7,11 @@
 meteor-platform
 autopublish
 insecure
-bootstrap
 joncursi:socket-io-client
 accounts-ui
 accounts-password
 accounts-twitter
 momentjs:moment
 meteorhacks:fast-render
+twbs:bootstrap
+natestrauser:font-awesome

@@ -1,1 +1,167 @@
-/* CSS declarations go here */
+body {
+	background-color: #f0f0f0;
+}
+
+.flex-wrap {
+	display: flex;
+
+}
+
+.flex-wrap.main-wrap {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.pillar {
+	display: inline-block;
+	height: 85vh;
+	vertical-align: top;
+	background-color: #fefefe;
+	border-radius: 2px;
+}
+
+.pillar-list {
+	height: calc(85vh - 55px);
+	overflow-y: scroll;
+}
+
+.pillar-friends {
+	flex: 0 1 200px;
+	margin-right: 20px;
+}
+
+.pillar-greetings {
+	flex: 0 1 300px;
+	margin-right: 20px;
+}
+
+.pillar-chatroom {
+	flex: 1 0 auto;
+}
+
+.pillar-open-chats {
+	flex: 0 1 150px;
+	height: 85vh;
+	border-right: 1px solid #f0f0f0;
+}
+
+.pillar-messages {
+	position: relative;
+	flex: 1 0 auto;
+}
+
+.pillar-header {
+	padding: 17px 14px;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.pillar-header .pillar-button {
+	float: right;
+	border: none;
+	background: none;
+}
+
+.pillar-list {
+	padding: 0;
+	list-style: none;
+}
+
+.friend-item {
+	padding: 3px 14px;
+}
+
+.friend-item .avatar {
+	vertical-align: middle;
+	border-radius: 2px;
+}
+
+.see-greetings-button {
+	float: right;
+	background: none;
+	border: none;
+	opacity: 0;
+	transition: opacity 250ms ease-in-out;
+}
+
+.see-greetings-button:hover {
+	opacity: 1;
+	transition: opacity 250ms ease-in-out;
+}
+
+.greeting-item {
+	padding: 6px 14px;
+	position: relative;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.greeting-item .avatar {
+	height: 20px;
+	border-radius: 2px;
+	margin-right: 6px;
+}
+
+.greeting-item .name {
+}
+
+.greeting-item .date {
+	float: right;
+	position: relative;
+	top: 3px;
+	font-size: 10px;
+	color: #a0a0a0;
+}
+
+.messages-list {
+	position: relative;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.user-reply {
+	padding: 14px;
+}
+
+.user-reply:last-child {
+	margin-bottom: 42px;
+}
+
+.user-reply .avatar {
+	height: 30px;
+	border-radius: 3px;
+	margin-right: 8px;
+}
+
+.user-reply .name {
+	color: #a0a0a0;
+}
+
+.user-reply .date {
+	float: right;
+	position: relative;
+	top: 6px;
+	font-size: 12px;
+	color: #a0a0a0;
+}
+
+.user-reply .content {
+	margin-left: 42px;
+	font-size: 14px;
+}
+
+.new-message {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin-bottom: 0;
+}
+
+#userMessage {
+	width: 100%;
+	border: none;
+	border-top: 1px solid #f0f0f0;
+	padding: 14px;
+}
+
+
