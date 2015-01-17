@@ -44,7 +44,7 @@ if (Meteor.isClient) {
     // });
 
 // =======================================
-// TEMPLATE HELPERS
+// TEMPLATE EVENTS
 // =======================================
 
     Template.addFriendModalTemplate.events({
@@ -66,7 +66,6 @@ if (Meteor.isClient) {
             }
         }
     })
-
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
