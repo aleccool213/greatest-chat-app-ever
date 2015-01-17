@@ -27,3 +27,16 @@
 		{{/each}}
 	</ul>
 </template>
+
+<template name="friendList">
+	<p>Your friends:</p>
+	<ul>
+		{{#each friends}}
+			{{> friend}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="friend">
+	<li>{{ profile.name }}</li>
+</template>
