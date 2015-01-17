@@ -11,6 +11,7 @@
   {{/if}}
   {{> hello}}
   {{> listOfOverallUsers}}
+  {{> addFriend}}
 </body>
 
 
@@ -24,6 +25,7 @@
 		{{#each userInCollection}}
 			<img src="{{services.twitter.profile_image_url}}" >
 		    <li>{{profile.name}} (@{{services.twitter.screenName}})</li>
+		    <p>{{_id}}</p>
 		{{/each}}
 	</ul>
 </template>
@@ -35,6 +37,12 @@
 			{{> friend}}
 		{{/each}}
 	</ul>
+</template>
+
+<template name="addFriend">
+	<form class="add-a-friend">
+		<input type="text" name="addFriendTextField" placeholder="Type to add a friend" />
+	</form>
 </template>
 
 <template name="friend">
