@@ -46,7 +46,8 @@ if (Meteor.isClient) {
     //         }
     //     },
     // });
-Template.userChatMessageIn.events({
+
+    Template.userChatMessageIn.events({
         "submit .new-message": function(){
 
             var message = event.target.chatText.value;
@@ -70,7 +71,7 @@ Template.userChatMessageIn.events({
     });
 
 
- Template.chatRoomMessages.helpers({
+    Template.chatRoomMessages.helpers({
             chatMessages: function(){
                 var chatMessages = []
                 var messagesArray = messages.find({}).fetch()
