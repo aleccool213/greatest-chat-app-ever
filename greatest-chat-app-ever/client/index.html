@@ -19,10 +19,8 @@
   {{> friendList}}
 
   {{> greetingList}}
-
+  <p>Sent Messages: </p>
   {{> chatRoomMessages}}
-
-  {{> sentMessages}}
 
   {{> userChatMessageIn}}
 </body>
@@ -100,33 +98,31 @@
 </template>
 
 
-<template name ="sentMessages">
-	<p>Sent Messages: </p>
-	<ul>
-		 {{#each pullSentMessages}}
-		 <li>
-		 		{{owner}}
-		 		{{userMessages}}
-		 		{{prettifyDate dateCreated}}
 
-			
-		 </li>
-		 {{/each}}
-	</ul>
-</template>
-
-<template name = "chatRoomMessages">
+<template name="chatRoomMessages">
 
 
-	{{#each chatRoomMessages}}
+	{{#each chatMessages}}
 		{{> sentMessages}}
 	{{/each}}
 
 </template> 
 
+
+<template name ="sentMessages">
+	
+	<ul>
+		 <li>
+	 		{{owner.profile.name}}
+	 		{{userMessages}}
+	 		{{prettifyDate dateCreated}}
+		 </li>
+	</ul>
+</template>
+
 <template name ="userChatMessageIn">
 
-<form>
+<form class="new-message">
 		<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
 </form>
 

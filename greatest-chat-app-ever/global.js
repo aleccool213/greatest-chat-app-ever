@@ -43,16 +43,16 @@ if (Meteor.isClient) {
     //     },
     // });
 Template.userChatMessageIn.events({
-        "submit .userMessage": function(){
+        "submit .new-message": function(){
 
             var message = event.target.chatText.value;
             console.log("message submitted:"+message);
             messages.insert({
 
-                owner: Meteor.userId(),                
+                owner: Meteor.user(),                
                 userMessages: message,
                 dateCreated: new Date(),
-                currChatRoom: chatRoomID
+                currChatRoom: ""
 
 
             });
@@ -65,20 +65,13 @@ Template.userChatMessageIn.events({
         }
     });
 
- Template.sentMessages.helpers({
-        pullSentMessages: function(){
-            return messages.find();
-        }
-    });
 
  Template.chatRoomMessages.helpers({
-            chatRoomMessages: function(currChatRoom){
+            chatMessages: function(){
                 var chatMessages = []
-                var messagesArray = messages.find({chatRoomId: currChatRoom}).fetch()
+                var messagesArray = messages.find({}).fetch()
 
-                for (i = 0; i < messagesArray.length; i++){
-                    chatMessages.push(messages.find({_id: messagesArray[i] }));
-                }
+                return messagesArray;
             }
                 
     });
