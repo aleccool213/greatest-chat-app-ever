@@ -1,33 +1,29 @@
 body {
-	background-color: #F0F0F0;
+		background-color: #F0F0F0;
 }
 
 .custom-container {
-	margin: auto 0;
-	width: 1200px;
+		margin: auto 0;
+		width: 1200px;
 }
-
 .friends {
-	float: left;
-
-	width: 200px;
-	height: 600px;
-
-	margin: 5px;
-	background-color: #fff;
+		float: left;
+		width: 200px;
+		height: 600px;
+		margin: 5px;
+		background-color: #fff;
 }
-	.friend {
+.friend {
 		padding: 5px;
-
 		border-bottom: 1px solid gray;
-	}
+}
 
 .feed {
-	float: left;
-	width: 300px;
-	height: 600px;
-	margin: 5px;
-	background-color: #fff;
+		float: left;
+		width: 300px;
+		height: 600px;
+		margin: 5px;
+		background-color: #fff;
 }
 .greeting {
 		padding: 5px;
@@ -51,7 +47,6 @@ body {
 }
 .last-said {
 		padding: 5px;
-
 		border-bottom: 1px solid gray;
 }
 .last-said p {
@@ -59,7 +54,6 @@ body {
 }
 .active-convo {
 		float: left;
-
 		width: 396px;
 		height: 400px;
 }
@@ -71,15 +65,12 @@ body {
 		padding: 5px;
 		padding-left: 20px;
 }
-
 .header {
 	padding: 5px;
 	border-bottom: 1px solid #F3F3F3;
 	background: #ffffff;
 	border-radius: 3px;
-
 }
-
 .footer {
 	padding: 5px;
 	border-top: 2px solid black;
