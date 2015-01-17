@@ -4,13 +4,17 @@
 
 <body>
   <h1>Welcome to Meteor!</h1>
+  {{#if currentUser}}
+  	<p> You are logged in! </p>
+  {{else}}
+  	<p> You are not logged in! </p>
+  {{/if}}
   {{> hello}}
   {{> listOfOverallUsers}}
 </body>
 
 
 <template name="hello">
-	<p>Login with twitter!</p>
 	{{> loginButtons}}
 </template>
 
