@@ -19,7 +19,7 @@ if (Meteor.isClient) {
     Template.friendList.helpers({
         friends: function() {
             var friendObjects = []
-            var friendIdArray = user_settings.find({ _id: Meteor.userId() }).fetch()
+            var friendIdArray = user_settings.find( { id: Meteor.userId() } ).fetch()[0].friendList;
 
             for (i = 0; i < friendIdArray.length; i++) {
                 friendObjects.push(Meteor.users.find({ _id: friendIdArray[i] }));
@@ -42,29 +42,27 @@ if (Meteor.isClient) {
     //         }
     //     },
     // });
-Template.userChatMessageIn.events({
-        "submit .new-message": function(){
+    Template.userChatMessageIn.events({
+            "submit .userMessage": function(){
 
-            var message = event.target.chatText.value;
-            console.log("message submitted:"+message);
-            messages.insert({
-
+                var message = event.target.chatText.value;
+                console.log("message submitted:"+message);
+                messages.insert({
                 owner: Meteor.user(),                
                 userMessages: message,
                 dateCreated: new Date(),
                 currChatRoom: ""
 
 
-            });
+                });
 
-            //Clear Form
-            event.target.chatText.value = "";
+                //Clear Form
+                event.target.chatText.value = "";
 
-            return false
+                return false
 
-        }
-    });
-
+            }
+        });
 
  Template.chatRoomMessages.helpers({
             chatMessages: function(){
@@ -75,6 +73,7 @@ Template.userChatMessageIn.events({
             }
                 
     });
+
 // =======================================
 // TEMPLATE EVENTS
 // =======================================
