@@ -5,9 +5,20 @@
 <body>
   <h1>Welcome to Meteor!</h1>
   {{> hello}}
+  {{> listOfOverallUsers}}
 </body>
+
 
 <template name="hello">
 	<p>Login with twitter!</p>
 	{{> loginButtons}}
+</template>
+
+<template name="listOfOverallUsers">
+	<p> List of all users: </p>
+	<ul>
+		{{#each userInCollection}}
+		    <li>test</li>
+		{{/each}}
+	</ul>
 </template>
