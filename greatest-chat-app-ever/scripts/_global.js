@@ -30,31 +30,36 @@ if (Meteor.isClient) {
         },
     });
 }
+//---------------------Don't Delete-------------------
+// Template.greeting.events({
+// "submit .new-greeting": function (event){
 
-Template.greeting.events({
-"submit: .new-greeting": postGreeting(event){
+//   var greeting = event.target.text.value;
 
-  var greeting = event.target.text.value;
+//   Greeting.insert({
+//     content: greeting,
+//     dateCreated: new Date(),
+//     owner: Meteor.userId
+//   });
 
-  Greeting.insert({
-    content: greeting,
-    dateCreated = new Date()
-    owner = Meteor.userId
-  });
+//   // Clear Form
+//   event.target.text.value = "";
 
-  // Clear Form
-  event.target.text.value = "";
+//   //Prevent default form submission
 
-  //Prevent default form submission
-
-  return false
-  }
-  return Greeting.find({},{sort: {dateCreated: -1}});
+//   return false
+//   }
   
+// });
 
+// Template.greeting.helpers({
 
-});
+//       greetings: function(){
+  
+//       return Greeting.find({},{sort: {dateCreated: -1}});
+//     }
 
+// });
 
 
 Meteor.methods({
