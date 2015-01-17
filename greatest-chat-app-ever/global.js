@@ -141,9 +141,6 @@ Template.userChatMessageIn.events({
                 } else {
                     user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
                     console.log(user_settings.find().fetch());
-
-                    user_settings.update({ id: Meteor.userId() }, { $addToSet: { friendList: friendToAddId }})
-                    // console.log(user_settings.find().fetch())
                 }
             }
             
