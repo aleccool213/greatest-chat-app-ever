@@ -7,7 +7,7 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a href="#" class="navbar-brand">GreatChat</a>
+				<a href="#" class="navbar-brand">Merge</a>
 			</div>
 			<ul class="navbar-nav navbar-right">
 				<li>{{> loginButtons}}</li>
@@ -57,8 +57,8 @@
 			</div>
   		</div>
   	</div>
-	
-	
+
+
 <!-- 	<div class="custom-container">
 		<div class="friends">
 		 	{{> friendList}}
@@ -81,9 +81,9 @@
 		 	</div>
 		 </div>
 		 		<p>Sent Messages: </p>
-		 	
 
-		 	
+
+
  	</div> -->
 </body>
 
@@ -124,11 +124,11 @@
 </template>
 
 <template name="greetingList">
-	
+
 	{{#each greetings}}
 		{{> greeting}}
 	{{/each}}
-	
+
 	{{> addGreetingModalTemplate}}
 </template>
 
@@ -138,7 +138,7 @@
 		<span class="name">{{ owner.profile.name }}</span>
 		<span class="date">{{prettifyDate dateCreated }}</span>
 		<p class="content" id="greetingContent">{{ content }}</p>
-		
+
 
 		<div id="ownerID" style="display: none;">{{owner.id}}</div>
 	</li>
@@ -171,7 +171,7 @@
 	{{#each chatMessages}}
 		{{> sentMessage}}
 	{{/each}}
-</template> 
+</template>
 
 <template name ="sentMessage">
 	 <div class = "user-reply">
@@ -179,8 +179,8 @@
 	 	<span class="name">{{owner.profile.name}}</span>
 	 	<span class="date">{{prettifyDate dateCreated}}</span>
  		<p class="content">{{userMessages}}</p>
- 		
- 		
+
+
 	 </div>
 </template>
 
@@ -189,8 +189,3 @@
 		<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
 	</form>
 </template>
-
-
-
-
-
