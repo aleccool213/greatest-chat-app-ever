@@ -3,7 +3,7 @@ chatRoom = new Mongo.Collection("chatRoom");
 messages = new Mongo.Collection("messages");
 greetings = new Mongo.Collection("greetings");
 user_settings = new Mongo.Collection("userSettings");
-requests = new Mongo.collection("requests");
+requests = new Mongo.Collection("requests");
 
 
 if (Meteor.isClient) {
