@@ -21,10 +21,10 @@
      
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Friend Requests <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Request</a></li>
-          </ul>
+        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Friend Requests <span class="caret"></span></a>
+
+          	{{> friendRequests}}
+          
         </li>
         <li><a href="#">{{> loginButtons }}</a></li>
       </ul>
@@ -32,30 +32,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<!-- 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a href="#" class="navbar-brand">Merge</a>
-			</div>
-			<div>
-			<ul class="navbar-nav navbar-right">
-				<li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a>request</a></li>
-		            <li><a>request</a></li>
-		          </ul>
-		        </li>
-
-		        <li></li>
-			</ul>
-			</div>
-		</div>
-	</nav> -->
-
   <!-- {{> listOfOverallUsers}} -->
-
-  {{> friendRequests}}
 
   	<div class="flex-wrap main-wrap">
   		<div class="pillar pillar-friends">
@@ -212,11 +189,19 @@
 
 
 <template name="friendRequests">
-	{{#each requests}}
-		{{request}}
-	{{/each}}
+	<ul class="dropdown-toggle friend-request-list" role="menu">
+		{{#each requests}}
+			{{> request}}
+		{{else}}
+			<li class="request-item">No requests</li>
+		{{/each}}
+	</ul>
 </template>
 
 <template name="request">
-	{{profile.name}}
+	<li class="request-item">
+		<img class="avatar" src="{{services.twitter.profile_image_url_https}}">
+		<span class="name">{{profile.name}}</span>
+		<button class="pull-right"><span class="fa fa-check"></span></button>
+	</li>
 </template>
