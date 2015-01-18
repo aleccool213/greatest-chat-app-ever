@@ -87,12 +87,27 @@ if (Meteor.isClient) {
         "submit .new-message": function(){
             var message = event.target.chatText.value;
             console.log("message submitted:"+message);
-            messages.insert({
-                owner: Meteor.user(),                
-                userMessages: message,
-                dateCreated: new Date(),
-                currChatRoom: Session.get("currentRoomId")
-            });
+
+            if (message == '/pokemon') {
+                Meteor.call('pokemonMod', function(error, result) {
+                    messages.insert({
+                        owner: Meteor.user(),
+                        userMessages: JSON.parse(result.content).name,
+                        dateCreated: new Date(),
+                        currChatRoom: Session.get("currentRoomId")
+                    })
+                })
+            } else {
+                messages.insert({
+                    owner: Meteor.user(),                
+                    userMessages: message,
+                    dateCreated: new Date(),
+                    currChatRoom: Session.get("currentRoomId")
+                });
+            }
+            var objDiv = document.getElementById("messageWindow");
+            objDiv.scrollTop = objDiv.scrollHeight + 42;
+            
 
             //Clear Form
             event.target.chatText.value = "";
@@ -193,7 +208,7 @@ if (Meteor.isClient) {
 // =======================================
 // METEOR METHODS
 // =======================================
-
+if (Meteor.isServer) {
     Meteor.methods({
         addFriend: function (friendScreenName){
             // Make sure the user is logged in before inserting a task
@@ -243,10 +258,18 @@ if (Meteor.isClient) {
                 var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0]
                 Session.set("currentRoomId", currentRoom._id);
             } 
+        },
+
+        pokemonMod: function() {
+            this.unblock()
+            id = Math.floor((Math.random() * 718) + 1);
+            url = 'http://pokeapi.co/api/v1/pokemon/' + id
+            return Meteor.http.call('GET', url)
+
         }       
 
     });
 
-
+}
 
 
