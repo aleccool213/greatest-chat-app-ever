@@ -10,11 +10,27 @@ if (Meteor.isClient) {
 // TEMPLATE HELPERS
 // =======================================
 
+    Template.chatHeader.helpers({
+        chatName: function(){
+            var targetId
+            userIdArray = chatRoom.find({ _id: Session.get('currentRoomId') }).fetch()[0].userIds
+            console.log(userIdArray[0])
+            if (userIdArray[0] != Meteor.userId()){
+                targetId = userIdArray[0]
+            } else {
+                targetId = userIdArray[1]
+            }
+
+            return Meteor.users.find({_id: targetId}).fetch()[0].profile.name
+        }
+    });
+
+
     Template.listOfOverallUsers.helpers({
         userInCollection: function(){
             return Meteor.users.find();
         }
-    })
+    });
 
     Template.friendList.helpers({
         friends: function() {
@@ -40,12 +56,6 @@ if (Meteor.isClient) {
         chatRooms: function() {
             //return array of chat room ids
             return chatRoom.find({}, { _id: true }).fetch()
-        }
-    })
-
-    Template.chatHeader.helpers({
-        chatName: function(){
-            return "First Lastname"
         }
     })
     
@@ -141,7 +151,7 @@ if (Meteor.isClient) {
                     console.log(JSON.parse(result.content).name)
                     messages.insert({
                         owner: Meteor.user(),
-                        userMessages: JSON.parse(result.content).name,
+                        userMessages: 'Name of character: ' + JSON.parse(result.content).name,
                         dateCreated: new Date(),
                         currChatRoom: Session.get("currentRoomId")
                     })
