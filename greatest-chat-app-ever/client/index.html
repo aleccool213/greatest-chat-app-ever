@@ -111,9 +111,10 @@
 
 <template name="chatRoomNumber">
 	<ul>
-		<li class="{{#if checked}}checked{{/if}}"> 
-			{{number}}
-			<input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+		<li> 
+			<button type="checkbox" class="toggle-checked" >
+				{{_id}}
+			</button>
 		</li>
 	</ul>
 </template>

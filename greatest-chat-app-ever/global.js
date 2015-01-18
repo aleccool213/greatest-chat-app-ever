@@ -42,9 +42,11 @@ if (Meteor.isClient) {
         }
     })
 
-    Template.chatRoomNumber.helpers({
+    Template.chatRoomNumber.events({
         "click .toggle-checked": function () {
             // Set the checked property to the opposite of its current value
+            console.log(this._id.toString());
+            console.log("button is clicked!");
             Session.set("currentRoomId", this._id);
           }
     })
@@ -79,7 +81,7 @@ if (Meteor.isClient) {
             chatMessages: function(){
                 var chatMessages = []
                 var messagesArray = messages.find({currChatRoom: Session.get("currentRoomId")}).fetch();
-                console.log(messageArray);
+                console.log(messagesArray);
                 return messagesArray;
             }
     });
