@@ -45,7 +45,6 @@ if (Meteor.isClient) {
 
     Template.friendRequests.helper({
         requests: function(){
-            console.log();
             var friendObjects = []
             var friendIdArray = requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests;
             console.log(requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests);

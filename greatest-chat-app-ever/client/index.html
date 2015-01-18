@@ -60,6 +60,8 @@
   		</div>
   	</div>
 
+  	{{> friendRequests}}
+
 </body>
 
 <template name="listOfOverallUsers">
@@ -163,15 +165,19 @@
 
 <template name="userChatMessageIn">
 	<form class="new-message">
-
 			<div name="chatRoomId" style="display: none;"></div>
 			<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
-
 	</form>
 </template>
 
 
 <template name="friendRequests">
+	{{#each requests}}
+		{{request}}
+	{{/each}}
+</template>
 
+<template name="request">
+	{{profile.name}}
 
 </template>
