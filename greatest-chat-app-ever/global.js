@@ -3,6 +3,8 @@ chatRoom = new Mongo.Collection("chatRoom");
 messages = new Mongo.Collection("messages");
 greetings = new Mongo.Collection("greetings");
 user_settings = new Mongo.Collection("userSettings");
+requests = new Mongo.collection("requests");
+
 
 if (Meteor.isClient) {
 
@@ -38,6 +40,20 @@ if (Meteor.isClient) {
     Template.greetingList.helpers({
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
+        }
+    })
+
+    Template.friendRequests.helper({
+        requests: function(){
+            console.log();
+            var friendObjects = []
+            var friendIdArray = requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests;
+            console.log(requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests);
+            for (i = 0; i < friendIdArray.length; i++) {
+                friendObjects.push(Meteor.users.findOne( friendIdArray[i] ));
+            }
+
+            return friendObjects
         }
     })
 
@@ -206,14 +222,21 @@ if (Meteor.isClient) {
             console.log("adding: "+ friendScreenName + "with id: "+ friendToAddId);
             // console.log(friendToAdd)
 
+            //if friend is a real person
             if (friendToAdd.length == 1) {
-                if (user_settings.find({ id: Meteor.userId() }).fetch().length > 0) {
-                    user_settings.update({ id: Meteor.userId() }, { $addToSet: { friendList: friendToAddId }});
-                    console.log(user_settings.find().fetch());
-                } else {
-                    user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
-                    console.log(user_settings.find().fetch());
+                //if friend is not in friendlist, then send invite
+                if (user_settings.find({ id: Meteor.userId() }).fetch().length == 0) {
+                    requests.insert({ id: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
+                    //user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
+                    //console.log(user_settings.find().fetch());
                 }
+                else{
+                    alert("already in friendlist");
+                }
+            }
+            else{
+                //invite a friend
+                alert("friend is not signed up for Merge.im yet")
             }
         },
 
