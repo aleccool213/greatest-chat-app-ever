@@ -28,11 +28,24 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.friend.events({
+        'click .friend-item': function(){
+            console.log(this_id);
+            checkChat(this._id);
+        }
+    })
+
     Template.greetingList.helpers({
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
         }
+    })
 
+    Template.greeting.events({
+        'click .greeting-item': function(){
+            console.log(this.owner._id);
+            checkChat(this.owner._id)
+        }
     })
 
     Template.chatRooms.helpers({
@@ -168,10 +181,21 @@ if (Meteor.isClient) {
             messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
         },
 
-        newChat: function(userID){
-            console.log(userID);
-        }
-        
-
+        checkChat: function(userID){
+            
+            var temp = chatRoom.find({ userIds: [Meteor.userId(), userId] }).fetch()
+            var temp2 = chatRoom.find({ userIds: [userId, Meteor.userId()] }).fetch()
+            console.log("temp: " + temp);
+            console.log("temp2: "+ temp2);
+            if (temp.count() == 1){
+                Session.set("currentRoomId", temp._id);
+            }
+            else if(temp2.count() == 1){
+                Session.set("currentRoomId", temp2._id)
+            }
+            else{
+                chatRoom.insert({ userIds: [Meteor.userId(), userID], modsActivated: [] });
+            }
+                
 
     });
