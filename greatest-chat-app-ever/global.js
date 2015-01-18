@@ -30,8 +30,8 @@ if (Meteor.isClient) {
 
     Template.friend.events({
         'click .friend-item': function(){
-            console.log(this_id);
-            checkChat(this._id);
+            console.log(this._id);
+            Meteor.call('checkChat', this._id)
         }
     })
 
@@ -44,7 +44,9 @@ if (Meteor.isClient) {
     Template.greeting.events({
         'click .greeting-item': function(){
             console.log(this.owner._id);
-            checkChat(this.owner._id)
+            if (this.owner._id != Meteor.userId()) {
+                Meteor.call('checkChat', this.owner._id)
+            }
         }
     })
 
@@ -56,11 +58,12 @@ if (Meteor.isClient) {
     })
 
     Template.chatRoomNumber.events({
-        "click .toggle-checked": function () {
+        "click .chatroom-item": function () {
             // Set the checked property to the opposite of its current value
             console.log(this._id.toString());
             console.log("button is clicked!");
             Session.set("currentRoomId", this._id);
+            $("#userMessage").focus();
           }
     })
 
@@ -88,6 +91,20 @@ if (Meteor.isClient) {
             return false
         }
     });
+
+    Template.chatRoomNumber.helpers({
+        user: function(){
+            var targetId
+            userIdArray = chatRoom.find({ _id: this._id }).fetch()[0].userIds
+            if (userIdArray[0] == Meteor.userId()){
+                targetId = userIdArray[1]
+            } else {
+                targetId = userIdArray[0]
+            }
+
+            return Meteor.users.find({_id: targetId}).fetch()[0]
+        }
+    })
 
 
     Template.body.helpers({
@@ -138,11 +155,11 @@ if (Meteor.isClient) {
     })
 
     //new chat when user clicks content of a greeting
-    Template.greeting.events({
-        "click #greetingContent": function(event){
-            Meteor.call('newChat', $('#ownerID').val());
-        }
-    })
+    // Template.greeting.events({
+    //     "click #greetingContent": function(event){
+    //         Meteor.call('newChat', $('#ownerID').val());
+    //     }
+    // })
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
@@ -153,6 +170,14 @@ if (Meteor.isClient) {
 
     Handlebars.registerHelper("chatRoomHelper", function(chatRoomID){
         return messages.find({ currChatRoom: chatRoomID }).fetch();
+    })
+
+    Handlebars.registerHelper("getAvatar", function(user){
+        return user.services.twitter.profile_image_url_https
+    })
+
+    Handlebars.registerHelper("getName", function(user){
+        return user.profile.name
     })
 
 }
@@ -182,8 +207,6 @@ if (Meteor.isClient) {
                     console.log(user_settings.find().fetch());
                 }
             }
-            
-
         },
 
         addGreeting: function(greetingContent) {
@@ -197,19 +220,24 @@ if (Meteor.isClient) {
 
         checkChat: function(userID){
             
-            var temp = chatRoom.find({ userIds: [Meteor.userId(), userId] }).fetch()
-            var temp2 = chatRoom.find({ userIds: [userId, Meteor.userId()] }).fetch()
+            var temp = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()
+            var temp2 = chatRoom.find({ userIds: [userID, Meteor.userId()] }).fetch()
             console.log("temp: " + temp);
             console.log("temp2: "+ temp2);
-            if (temp.count() == 1){
+            if (temp.length == 1){
                 Session.set("currentRoomId", temp._id);
             }
-            else if(temp2.count() == 1){
+            else if(temp2.lenght == 1){
                 Session.set("currentRoomId", temp2._id)
             }
             else{
                 chatRoom.insert({ userIds: [Meteor.userId(), userID], modsActivated: [] });
-            }
-                
+                Session.set("currentRoomId", chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0]._id);
+            } 
+        }       
 
     });
+
+
+
+

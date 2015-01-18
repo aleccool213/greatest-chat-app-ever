@@ -184,4 +184,33 @@ body {
 	border: none;
 	border-top: 1px solid #f0f0f0;
 	padding: 14px;
+	transition: box-shadow 250ms ease-in-out;
+}
+
+#userMessage:focus {
+	outline: none;
+	box-shadow: 0px 0px 2px 0px rgba(73,24,232,1);
+	transition: box-shadow 250ms ease-in-out;
+}
+
+.open-chats-list {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.chatroom-item {
+	padding: 6px;
+}
+
+.chatroom-item:hover {
+	background-color: #fafafa;
+	cursor: pointer;
+	cursor: hand;
+}
+
+.chatroom-item .avatar {
+	height: 15px;
+	border-radius: 2px;
+	vertical-align: middle;
 }

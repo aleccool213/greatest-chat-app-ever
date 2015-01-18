@@ -136,8 +136,9 @@
 </template>
 
 <template name="chatRoomNumber">
-	<li> 
-		<button type="checkbox" class="toggle-checked" >{{_id}}</button>
+	<li class="chatroom-item">
+		<img class="avatar" src="{{getAvatar user }}">
+		<span>{{getName user }}</span>
 	</li>
 </template>
 
