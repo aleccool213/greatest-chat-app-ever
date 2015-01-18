@@ -69,7 +69,7 @@ if (Meteor.isClient) {
     Template.chatRooms.helpers({
         chatRooms: function() {
             //return array of chat room ids
-            return chatRoom.find({}, { _id: true }).fetch()
+            return chatRoom.find({ userIds: { $in: [Meteor.userId()] }}, { _id: true }).fetch()
         }
     })
 
