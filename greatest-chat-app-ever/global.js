@@ -35,16 +35,16 @@ if (Meteor.isClient) {
             console.log(this._id);
             Meteor.call('checkChat', this._id)
         }
-    })
+    });
 
     Template.greetingList.helpers({
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
         }
-    })
+    });
 
-    Template.friendRequests.helper({
-        requests: function(){
+    Template.friendRequests.helpers({
+        requests: function() {
             var friendObjects = []
             var friendIdArray = requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests;
             console.log(requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests);
@@ -54,7 +54,7 @@ if (Meteor.isClient) {
 
             return friendObjects
         }
-    })
+    });
 
     Template.greeting.events({
         'click .greeting-item': function(){
