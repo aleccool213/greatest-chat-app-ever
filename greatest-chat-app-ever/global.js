@@ -211,41 +211,46 @@ if (Meteor.isClient) {
                 throw new Meteor.Error("not-authorized");
             }
             if (user_settings.find({ userId: Meteor.userId() }).fetch().length == 0) {
+                console.log("adding user to user_settings");
                 user_settings.insert({ userId: Meteor.userId() });
             }
 
             var friendToAdd = Meteor.users.find({ 'services.twitter.screenName': friendScreenName }).fetch();
+            console.log(friendToAdd.length);
             var friendToAddId = friendToAdd[0]._id;
             console.log("adding: "+ friendScreenName + "with id: "+ friendToAddId);
 
             //if friend is a real person
             if (friendToAdd.length == 1) {
                 //if friend in friendlist, stop
-                var listOfFriends = user_settings.find({id: Meteor.userId()}).fetch()[0].friendList;
-                for (i = 0; i < listOfFriends.length; i++) {
-                    if(listOfFriends[i]._id == friendToAddId){
-                        dontAdd = true;
+                var listOfFriends = user_settings.find({userId: Meteor.userId()}).fetch()[0].friendList;
+                if(listOfFriends != undefined){
+                    for (i = 0; i < listOfFriends.length; i++) {
+                        if(listOfFriends[i]._id == friendToAddId){
+                            dontAdd = true;
+                        }
                     }
                 }
 
                 //if friend is not in friendlist, but he/she might be in requests
-                var listOfFriendRequests = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
-                for(i = 0;i<listOfFriendRequests.length;i++){
-                    if(listOfFriendRequests[i]._id == friendToAddId){
-                        dontAdd = true;
-                        alert("friend already in friend requests")
-                    }
-                } 
+                var listOfFriendRequests = requests.find( { userId: Meteor.userId() } ).fetch();
+                if(listOfFriendRequests[0] != undefined){
+                    for(i = 0;i<listOfFriendRequests[0].friendRequests.length;i++){
+                        if(listOfFriendRequests[0].friendRequests[i]._id == friendToAddId){
+                            dontAdd = true;
+                            alert("friend already in friend requests")
+                        }
+                    } 
+                }
 
                 //we are safe and should send request
-
                 if(dontAdd == false){
                     //if requests for this user is empty, init friend request list for user
-                    if(requests.find({ userId: Meteor.userId() }).fetch().length == 0){
-                        requests.insert({ userId: Meteor.userId() });
+                    if(requests.find({ userId: friendToAddId }).fetch().length == 0){
+                        requests.insert({ userId: friendToAddId });
                     }
                     console.log("sending request");
-                    requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
+                    requests.update({ userId: friendToAddId }, { $addToSet: { friendRequests: Meteor.user() }});
                 }
             }
             else{
@@ -301,7 +306,7 @@ if (Meteor.isClient) {
             user_settings.update({id: Meteor.userId()}, {$addToSet: {friendList: temp} });
             //remove from both this user and the user who is getting accepted 
             requests.update({userId: Meteor.userId()}, {$pull: {requestList: temp._id}});
-        }
+        },
 
     });
 
