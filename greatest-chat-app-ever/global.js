@@ -3,7 +3,7 @@ chatRoom = new Mongo.Collection("chatRoom");
 messages = new Mongo.Collection("messages");
 greetings = new Mongo.Collection("greetings");
 user_settings = new Mongo.Collection("userSettings");
-requests = new Mongo.collection("requests");
+requests = new Mongo.Collection("requests");
 
 
 if (Meteor.isClient) {
@@ -246,7 +246,22 @@ if (Meteor.isClient) {
         },
 
         addMessage: function(chatRoomID, messageContent) {
-            messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
+            var XmlApi = Meteor.npm.Require('xml-parser');
+            var parse = new XmlApi({
+                version: "1.2.0"
+            });
+
+            //if the message prefix is "/wolfram"
+            if(messageContent.substring(0, 7) == "/wolfram"){
+                var getResponse = Meteor.http.get("http://api.wolframalpha.com/v2/query?input=" + messageContent.substring(9, messageContent.length()) + "&appid=PG9HJR-46KYVEWH2J", {timeout:30000})
+                var xmlParsed = parse(getResponse.content);
+                console.log(xmlParsed);
+            }
+            else{
+                messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
+            }
+            
+
         },
 
         checkChat: function(userID){
