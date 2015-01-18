@@ -97,6 +97,17 @@ if (Meteor.isClient) {
                         currChatRoom: Session.get("currentRoomId")
                     })
                 })
+            } else if (message == '/coyote'){
+                $("nav").toggleClass("coyote")
+                $(".pillar").toggleClass("coyote")
+                $(".pillar-open-chats").toggleClass("coyote")
+                $(".pillar-header").toggleClass("coyote")
+                $(".greeting-item").toggleClass("coyote")
+                $("#userMessage").toggleClass("coyote")
+                $(".pillar-open-chats").toggleClass("coyote")
+                $(".pillar-header").toggleClass("coyote")
+                $(".greeting-item").toggleClass("coyote")
+
             } else {
                 messages.insert({
                     owner: Meteor.user(),                

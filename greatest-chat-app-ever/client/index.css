@@ -2,12 +2,28 @@ body {
 	background-color: #f0f0f0;
 }
 
+nav.coyote {
+	background-color: #42FF23;
+}
+
+.navbar-brand {
+	color: #333;
+}
+
 .flex-wrap {
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-
 }
+
+.login {
+	margin-right: 160px;
+}
+
+.login-link-text {
+	color: #333
+}
+
 
 .flex-wrap.main-wrap {
 	padding-right: 15px;
@@ -20,6 +36,11 @@ body {
 	vertical-align: top;
 	background-color: #fefefe;
 	border-radius: 2px;
+	box-shadow: 0px 0px 2px 0px #f0f0f0;
+}
+
+.pillar.coyote {
+	box-shadow: 0px 0px 2px 0px #42FF23;
 }
 
 .pillar-list {
@@ -55,6 +76,10 @@ body {
 	border-right: 1px solid #f0f0f0;
 }
 
+.pillar-open-chats.coyote {
+	border-color: #42FF23;
+}
+
 .pillar-messages {
 	position: relative;
 	-webkit-flex: 1 0 auto;
@@ -65,6 +90,10 @@ body {
 .pillar-header {
 	padding: 17px 14px;
 	border-bottom: 1px solid #f0f0f0;
+}
+
+.pillar-header.coyote {
+	border-color: #42FF23;
 }
 
 .pillar-header .pillar-button {
@@ -120,6 +149,10 @@ body {
 	padding: 6px 14px;
 	position: relative;
 	border-bottom: 1px solid #f0f0f0;
+}
+
+.greeting-item.coyote {
+	border-color: #42FF23;
 }
 
 .greeting-item:hover {
@@ -197,6 +230,12 @@ body {
 	border-top: 1px solid #f0f0f0;
 	padding: 14px;
 	transition: box-shadow 250ms ease-in-out;
+}
+#userMessage.coyote {
+	border-color: #42FF23;
+}
+#userMessage:focus.coyote {
+	box-shadow: 0px 0px 2px 0px #42FF23;
 }
 
 #userMessage:focus {
