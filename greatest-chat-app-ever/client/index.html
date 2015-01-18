@@ -58,33 +58,14 @@
   		</div>
   	</div>
 
+  {{> greetingList}}
 
-<!-- 	<div class="custom-container">
-		<div class="friends">
-		 	{{> friendList}}
-		</div>
-		<div class="feed">
-		 	{{> greetingList}}
-		 </div>
-		 <div class="conversation">
-		 	<div class="open-convos">
-		 		<div class="header">
-		 			Open Conversations
-		 		</div>
-		 	</div>
-		 	<div class="active-convo">
-		 		<div class="header">Friend Name: </div>
-		 	</div>
-		 	<div class="convo-replies">
-		 		{{> chatRoomMessages}}
-		 		{{> userChatMessageIn}}
-		 	</div>
-		 </div>
-		 		<p>Sent Messages: </p>
+  <p>Chat Rooms</p>
+  {{> chatRooms}}
 
+  <p>Sent Messages: </p>
+  {{> chatRoomMessages}}
 
-
- 	</div> -->
 </body>
 
 <template name="listOfOverallUsers">
@@ -154,6 +135,22 @@
     </div>
 </template>
 
+<template name="chatRooms">
+	{{#each chatRooms}}
+		{{> chatRoomNumber}}
+	{{/each}}
+</template>
+
+<template name="chatRoomNumber">
+	<ul>
+		<li> 
+			<button type="checkbox" class="toggle-checked" >
+				{{_id}}
+			</button>
+		</li>
+	</ul>
+</template>
+
 
 <template name="chatHeader">
 	<!-- return name of other person in the chat -->
@@ -184,8 +181,11 @@
 	 </div>
 </template>
 
-<template name ="userChatMessageIn">
+<template name="userChatMessageIn">
 	<form class="new-message">
-		<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
+
+			<div name="chatRoomId" style="display: none;"></div>
+			<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
+
 	</form>
 </template>
