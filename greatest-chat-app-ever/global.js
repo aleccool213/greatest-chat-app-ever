@@ -20,11 +20,8 @@ if (Meteor.isClient) {
         friends: function() {
             var friendObjects = []
             var friendIdArray = user_settings.find( { id: Meteor.userId() } ).fetch()[0].friendList;
-            console.log(friendIdArray);
-
             for (i = 0; i < friendIdArray.length; i++) {
                 friendObjects.push(Meteor.users.findOne( friendIdArray[i] ));
-                console.log(Meteor.users.findOne( friendIdArray[i] ));
             }
 
             return friendObjects
@@ -33,10 +30,25 @@ if (Meteor.isClient) {
 
     Template.greetingList.helpers({
         greetings: function() {
-            console.log(greetings.find({},{sort: {dateCreated: -1}}).fetch());
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
         }
 
+    })
+
+    Template.chatRooms.helpers({
+        chatRooms: function() {
+            //return array of chat room ids
+            return chatRoom.find({}, { _id: true }).fetch();
+        }
+    })
+
+    Template.chatRoomNumber.events({
+        "click .toggle-checked": function () {
+            // Set the checked property to the opposite of its current value
+            console.log(this._id.toString());
+            console.log("button is clicked!");
+            Session.set("currentRoomId", this._id);
+          }
     })
 
     // Template.chatRoom.events({
@@ -49,24 +61,18 @@ if (Meteor.isClient) {
 
     Template.userChatMessageIn.events({
         "submit .new-message": function(){
-
             var message = event.target.chatText.value;
             console.log("message submitted:"+message);
             messages.insert({
-
                 owner: Meteor.user(),                
                 userMessages: message,
                 dateCreated: new Date(),
-                currChatRoom: ""
-
-
+                currChatRoom: Session.get("currentRoomId")
             });
 
             //Clear Form
             event.target.chatText.value = "";
-
             return false
-
         }
     });
 
@@ -74,12 +80,12 @@ if (Meteor.isClient) {
     Template.chatRoomMessages.helpers({
             chatMessages: function(){
                 var chatMessages = []
-                var messagesArray = messages.find({}).fetch()
-
+                var messagesArray = messages.find({currChatRoom: Session.get("currentRoomId")}).fetch();
+                console.log(messagesArray);
                 return messagesArray;
             }
-                
     });
+
 // =======================================
 // TEMPLATE EVENTS
 // =======================================
@@ -114,9 +120,14 @@ if (Meteor.isClient) {
 // HANDLEBARS HELPERS
 // =======================================
 
-    Handlebars.registerHelper("prettifyDate", function(timestamp) {
+    Handlebars.registerHelper("prettifyDate", function(timestamp){
         return moment(new Date(timestamp)).fromNow();
     });
+
+    Handlebars.registerHelper("chatRoomHelper", function(chatRoomID){
+        return messages.find({ currChatRoom: chatRoomID }).fetch();
+    })
+
 }
 
 // =======================================
@@ -132,7 +143,7 @@ if (Meteor.isClient) {
 
             var friendToAdd = Meteor.users.find({ 'services.twitter.screenName': friendScreenName }).fetch();
             var friendToAddId = friendToAdd[0]._id;
-            console.log("adding: "+ friendScreenName+ "with id: "+friendToAddId);
+            console.log("adding: "+ friendScreenName + "with id: "+ friendToAddId);
             // console.log(friendToAdd)
 
             if (friendToAdd.length == 1) {
