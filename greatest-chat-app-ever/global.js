@@ -30,13 +30,6 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.friend.events({
-        'click .friend-item': function(){
-            console.log(this._id);
-            Meteor.call('checkChat', this._id)
-        }
-    });
-
     Template.greetingList.helpers({
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
@@ -44,27 +37,10 @@ if (Meteor.isClient) {
     });
 
     Template.friendRequests.helpers({
-        requests: function() {
-            var friendObjects = []
-            var friendRequestArray = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
-            console.log(friendRequestArray.length);
-            for (i = 0; i < friendRequestArray.length; i++) {
-                
-                friendObjects.push(friendRequestArray[i]);
-            }
-            console.log(friendObjects);
-            return friendObjects
+        requests: function() { 
+            return requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
         }
     });
-
-    Template.greeting.events({
-        'click .greeting-item': function(){
-            console.log(this.owner._id);
-            if (this.owner._id != Meteor.userId()) {
-                Meteor.call('checkChat', this.owner._id)
-            }
-        }
-    })
 
     Template.chatRooms.helpers({
         chatRooms: function() {
@@ -90,31 +66,6 @@ if (Meteor.isClient) {
             $("#userMessage").focus();
           }
     })
-
-    // Template.chatRoom.events({
-    //     "keyup .message-input" : function(event) {
-    //         if (event.which == 13 && !event.shiftKey) {
-    //             Meteor.call('addMessage', this._id, $(".message-input").val())
-    //         }
-    //     },
-    // });
-
-    Template.userChatMessageIn.events({
-        "submit .new-message": function(){
-            var message = event.target.chatText.value;
-            console.log("message submitted:"+message);
-            messages.insert({
-                owner: Meteor.user(),                
-                userMessages: message,
-                dateCreated: new Date(),
-                currChatRoom: Session.get("currentRoomId")
-            });
-
-            //Clear Form
-            event.target.chatText.value = "";
-            return false
-        }
-    });
 
     Template.chatRoomNumber.helpers({
         user: function(){
@@ -178,12 +129,39 @@ if (Meteor.isClient) {
         }
     })
 
-    //new chat when user clicks content of a greeting
-    // Template.greeting.events({
-    //     "click #greetingContent": function(event){
-    //         Meteor.call('newChat', $('#ownerID').val());
-    //     }
-    // })
+    Template.userChatMessageIn.events({
+        "submit .new-message": function(){
+            var message = event.target.chatText.value;
+            console.log("message submitted:"+message);
+            messages.insert({
+                owner: Meteor.user(),                
+                userMessages: message,
+                dateCreated: new Date(),
+                currChatRoom: Session.get("currentRoomId")
+            });
+
+            //Clear Form
+            event.target.chatText.value = "";
+            return false
+        }
+    });
+
+    Template.greeting.events({
+        'click .greeting-item': function(){
+            console.log(this.owner._id);
+            if (this.owner._id != Meteor.userId()) {
+                Meteor.call('checkChat', this.owner._id)
+            }
+        }
+    })
+
+    Template.friend.events({
+        'click .friend-item': function(){
+            console.log(this._id);
+            Meteor.call('checkChat', this._id)
+        }
+    });
+
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
@@ -212,6 +190,7 @@ if (Meteor.isClient) {
 
     Meteor.methods({
         addFriend: function (friendScreenName){
+            var dontAdd = true;
             // Make sure the user is logged in before inserting a task
             if (! Meteor.userId()) {
                 throw new Meteor.Error("not-authorized");
@@ -220,7 +199,6 @@ if (Meteor.isClient) {
             var friendToAdd = Meteor.users.find({ 'services.twitter.screenName': friendScreenName }).fetch();
             var friendToAddId = friendToAdd[0]._id;
             console.log("adding: "+ friendScreenName + "with id: "+ friendToAddId);
-            // console.log(friendToAdd)
 
             //if friend is a real person
             if (friendToAdd.length == 1) {
@@ -231,9 +209,20 @@ if (Meteor.isClient) {
                     if(requests.find({ userId: Meteor.userId() }).fetch().length == 0){
                         requests.insert({ userId: Meteor.userId() });
                     }
-                    requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
-                    //user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
-                    //console.log(user_settings.find().fetch());
+                    else{
+                        //if friendToAdd is in friendRequests of current user
+                        var listOfFriends = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
+                        console.log(listOfFriends);
+                        
+                        for(i = 0;i<listOfFriends.length;i++){
+                            if(listOfFriends[i]._id == friendToAddId){
+                                dontAdd = false;
+                            }
+                        } 
+                    }
+                    if(dontAdd == true){
+                        requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
+                    }
                 }
                 else{
                     alert("already in friendlist");
