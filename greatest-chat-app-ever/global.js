@@ -30,13 +30,6 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.friend.events({
-        'click .friend-item': function(){
-            console.log(this._id);
-            Meteor.call('checkChat', this._id)
-        }
-    });
-
     Template.greetingList.helpers({
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
@@ -48,15 +41,6 @@ if (Meteor.isClient) {
             return requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
         }
     });
-
-    Template.greeting.events({
-        'click .greeting-item': function(){
-            console.log(this.owner._id);
-            if (this.owner._id != Meteor.userId()) {
-                Meteor.call('checkChat', this.owner._id)
-            }
-        }
-    })
 
     Template.chatRooms.helpers({
         chatRooms: function() {
@@ -82,31 +66,6 @@ if (Meteor.isClient) {
             $("#userMessage").focus();
           }
     })
-
-    // Template.chatRoom.events({
-    //     "keyup .message-input" : function(event) {
-    //         if (event.which == 13 && !event.shiftKey) {
-    //             Meteor.call('addMessage', this._id, $(".message-input").val())
-    //         }
-    //     },
-    // });
-
-    Template.userChatMessageIn.events({
-        "submit .new-message": function(){
-            var message = event.target.chatText.value;
-            console.log("message submitted:"+message);
-            messages.insert({
-                owner: Meteor.user(),                
-                userMessages: message,
-                dateCreated: new Date(),
-                currChatRoom: Session.get("currentRoomId")
-            });
-
-            //Clear Form
-            event.target.chatText.value = "";
-            return false
-        }
-    });
 
     Template.chatRoomNumber.helpers({
         user: function(){
@@ -170,12 +129,39 @@ if (Meteor.isClient) {
         }
     })
 
-    //new chat when user clicks content of a greeting
-    // Template.greeting.events({
-    //     "click #greetingContent": function(event){
-    //         Meteor.call('newChat', $('#ownerID').val());
-    //     }
-    // })
+    Template.userChatMessageIn.events({
+        "submit .new-message": function(){
+            var message = event.target.chatText.value;
+            console.log("message submitted:"+message);
+            messages.insert({
+                owner: Meteor.user(),                
+                userMessages: message,
+                dateCreated: new Date(),
+                currChatRoom: Session.get("currentRoomId")
+            });
+
+            //Clear Form
+            event.target.chatText.value = "";
+            return false
+        }
+    });
+
+    Template.greeting.events({
+        'click .greeting-item': function(){
+            console.log(this.owner._id);
+            if (this.owner._id != Meteor.userId()) {
+                Meteor.call('checkChat', this.owner._id)
+            }
+        }
+    })
+
+    Template.friend.events({
+        'click .friend-item': function(){
+            console.log(this._id);
+            Meteor.call('checkChat', this._id)
+        }
+    });
+
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
@@ -234,13 +220,9 @@ if (Meteor.isClient) {
                             }
                         } 
                     }
-                    
                     if(dontAdd == true){
                         requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
                     }
-                    
-                    //user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
-                    //console.log(user_settings.find().fetch());
                 }
                 else{
                     alert("already in friendlist");
