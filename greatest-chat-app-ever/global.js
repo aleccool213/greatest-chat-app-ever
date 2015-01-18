@@ -112,7 +112,7 @@ if (Meteor.isClient) {
     Template.addFriendModalTemplate.events({
         "keyup #addFriendInput": function(event){
             if (event.which == 13) {
-                Meteor.call('addFriend', $("#addFriendInput").val())
+                Meteor.call('sendRequest', $("#addFriendInput").val())
                 $("#addFriendInput").val('')
                 $("#addFriendModal").modal('hide')
             }
@@ -195,11 +195,14 @@ if (Meteor.isClient) {
 // =======================================
 
     Meteor.methods({
-        addFriend: function (friendScreenName){
-            var dontAdd = true;
+        sendRequest: function (friendScreenName){
+            var dontAdd = false;
             // Make sure the user is logged in before inserting a task
             if (! Meteor.userId()) {
                 throw new Meteor.Error("not-authorized");
+            }
+            if (user_settings.find({ userId: Meteor.userId() }).fetch().length == 0) {
+                user_settings.insert({ userId: Meteor.userId() });
             }
 
             var friendToAdd = Meteor.users.find({ 'services.twitter.screenName': friendScreenName }).fetch();
@@ -208,30 +211,32 @@ if (Meteor.isClient) {
 
             //if friend is a real person
             if (friendToAdd.length == 1) {
-                //if friend is not in friendlist, then send invite
-                if (user_settings.find({ userId: Meteor.userId() }).fetch().length == 0) {
-                    console.log("adding friend");
+                //if friend in friendlist, stop
+                var listOfFriends = user_settings.find({id: Meteor.userId()}).fetch()[0].friendList;
+                for (i = 0; i < listOfFriends.length; i++) {
+                    if(listOfFriends[i]._id == friendToAddId){
+                        dontAdd = true;
+                    }
+                }
+
+                //if friend is not in friendlist, but he/she might be in requests
+                var listOfFriendRequests = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
+                for(i = 0;i<listOfFriendRequests.length;i++){
+                    if(listOfFriendRequests[i]._id == friendToAddId){
+                        dontAdd = true;
+                        alert("friend already in friend requests")
+                    }
+                } 
+
+                //we are safe and should send request
+
+                if(dontAdd == false){
                     //if requests for this user is empty, init friend request list for user
                     if(requests.find({ userId: Meteor.userId() }).fetch().length == 0){
                         requests.insert({ userId: Meteor.userId() });
                     }
-                    else{
-                        //if friendToAdd is in friendRequests of current user
-                        var listOfFriends = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
-                        console.log(listOfFriends);
-                        
-                        for(i = 0;i<listOfFriends.length;i++){
-                            if(listOfFriends[i]._id == friendToAddId){
-                                dontAdd = false;
-                            }
-                        } 
-                    }
-                    if(dontAdd == true){
-                        requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
-                    }
-                }
-                else{
-                    alert("already in friendlist");
+                    console.log("sending request");
+                    requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
                 }
             }
             else{
@@ -278,10 +283,9 @@ if (Meteor.isClient) {
                 var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0];
                 Session.set("currentRoomId", currentRoom._id);
             } 
-        }       
+        },
 
         addFriendFromRequest: function(userToAdd){
-
             //get the user object
             var temp = Meteor.users.find({_id: userToAdd});
             //add to friends list
