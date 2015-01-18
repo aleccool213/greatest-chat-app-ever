@@ -162,6 +162,12 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.request.events({
+        'click .pull-right': function(){
+            Meteor.call('addFriendFromRequest', this._id)
+        }
+    });
+
 // =======================================
 // HANDLEBARS HELPERS
 // =======================================
@@ -268,15 +274,20 @@ if (Meteor.isClient) {
                 Session.set("currentRoomId", temp2._id)
             }
             else{
-                
                 chatRoom.insert({ userIds: [Meteor.userId(), userID], modsActivated: [] });
                 var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0];
                 Session.set("currentRoomId", currentRoom._id);
             } 
         }       
 
-        addFriendFromRequest: function(){
-            return 0;
+        addFriendFromRequest: function(userToAdd){
+
+            //get the user object
+            var temp = Meteor.users.find({_id: userToAdd});
+            //add to friends list
+            user_settings.update({id: Meteor.userId()}, {$addToSet: {friendList: temp} });
+            //remove from both this user and the user who is getting accepted 
+            requests.update({userId: Meteor.userId()}, {$pull: {requestList: temp._id}});
         }
 
     });
