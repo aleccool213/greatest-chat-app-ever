@@ -28,12 +28,7 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.friend.events({
-        'click .friend-item': function(){
-            console.log(this._id);
-            Meteor.call('checkChat', this._id)
-        }
-    })
+    
 
     Template.greetingList.helpers({
         greetings: function() {
@@ -41,15 +36,7 @@ if (Meteor.isClient) {
         }
     })
 
-    Template.greeting.events({
-        'click .greeting-item': function(){
-            console.log(this.owner._id);
-            if (this.owner._id != Meteor.userId()) {
-                Meteor.call('checkChat', this.owner._id)
-            }
-        }
-    })
-
+    
     Template.chatRooms.helpers({
         chatRooms: function() {
             //return array of chat room ids
@@ -65,15 +52,7 @@ if (Meteor.isClient) {
         }
     })
 
-    Template.chatRoomNumber.events({
-        "click .chatroom-item": function () {
-            // Set the checked property to the opposite of its current value
-            console.log(this._id.toString());
-            console.log("button is clicked!");
-            Session.set("currentRoomId", this._id);
-            $("#userMessage").focus();
-          }
-    })
+    
 
     // Template.chatRoom.events({
     //     "keyup .message-input" : function(event) {
@@ -83,48 +62,7 @@ if (Meteor.isClient) {
     //     },
     // });
 
-    Template.userChatMessageIn.events({
-        "submit .new-message": function(){
-            var message = event.target.chatText.value;
-            console.log("message submitted:"+message);
-
-            if (message == '/pokemon') {
-                Meteor.call('pokemonMod', function(error, result) {
-                    messages.insert({
-                        owner: Meteor.user(),
-                        userMessages: JSON.parse(result.content).name,
-                        dateCreated: new Date(),
-                        currChatRoom: Session.get("currentRoomId")
-                    })
-                })
-            } else if (message == '/coyote'){
-                $("nav").toggleClass("coyote")
-                $(".pillar").toggleClass("coyote")
-                $(".pillar-open-chats").toggleClass("coyote")
-                $(".pillar-header").toggleClass("coyote")
-                $(".greeting-item").toggleClass("coyote")
-                $("#userMessage").toggleClass("coyote")
-                $(".pillar-open-chats").toggleClass("coyote")
-                $(".pillar-header").toggleClass("coyote")
-                $(".greeting-item").toggleClass("coyote")
-
-            } else {
-                messages.insert({
-                    owner: Meteor.user(),                
-                    userMessages: message,
-                    dateCreated: new Date(),
-                    currChatRoom: Session.get("currentRoomId")
-                });
-            }
-            var objDiv = document.getElementById("messageWindow");
-            objDiv.scrollTop = objDiv.scrollHeight + 42;
-            
-
-            //Clear Form
-            event.target.chatText.value = "";
-            return false
-        }
-    });
+    
 
     Template.chatRoomNumber.helpers({
         user: function(){
@@ -187,6 +125,77 @@ if (Meteor.isClient) {
             }
         }
     })
+
+    Template.userChatMessageIn.events({
+        "submit .new-message": function(){
+            var message = event.target.chatText.value;
+            console.log("message submitted:"+message);
+
+            if (message == '/pokemon') {
+                Meteor.call('pokemonMod', function(error, result) {
+                    messages.insert({
+                        owner: Meteor.user(),
+                        userMessages: JSON.parse(result.content).name,
+                        dateCreated: new Date(),
+                        currChatRoom: Session.get("currentRoomId")
+                    })
+                })
+            } else if (message == '/coyote'){
+                $("nav").toggleClass("coyote")
+                $(".pillar").toggleClass("coyote")
+                $(".pillar-open-chats").toggleClass("coyote")
+                $(".pillar-header").toggleClass("coyote")
+                $(".greeting-item").toggleClass("coyote")
+                $("#userMessage").toggleClass("coyote")
+                $(".pillar-open-chats").toggleClass("coyote")
+                $(".pillar-header").toggleClass("coyote")
+                $(".greeting-item").toggleClass("coyote")
+
+            } else {
+                messages.insert({
+                    owner: Meteor.user(),                
+                    userMessages: message,
+                    dateCreated: new Date(),
+                    currChatRoom: Session.get("currentRoomId")
+                });
+            }
+            var objDiv = document.getElementById("messageWindow");
+            objDiv.scrollTop = objDiv.scrollHeight + 42;
+            
+
+            //Clear Form
+            event.target.chatText.value = "";
+            return false
+        }
+    });
+
+    Template.greeting.events({
+        'click .greeting-item': function(){
+            console.log(this.owner._id);
+            if (this.owner._id != Meteor.userId()) {
+                Meteor.call('checkChat', this.owner._id)
+            }
+        }
+    })
+
+    Template.chatRoomNumber.events({
+        "click .chatroom-item": function () {
+            // Set the checked property to the opposite of its current value
+            console.log(this._id.toString());
+            console.log("button is clicked!");
+            Session.set("currentRoomId", this._id);
+            $("#userMessage").focus();
+          }
+    })
+
+    Template.friend.events({
+        'click .friend-item': function(){
+            console.log(this._id);
+            Meteor.call('checkChat', this._id)
+        }
+    })
+
+
 
     //new chat when user clicks content of a greeting
     // Template.greeting.events({
