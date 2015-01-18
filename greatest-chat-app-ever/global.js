@@ -46,12 +46,13 @@ if (Meteor.isClient) {
     Template.friendRequests.helpers({
         requests: function() {
             var friendObjects = []
-            var friendIdArray = requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests;
-            console.log(requests.find( { id: Meteor.userId() } ).fetch()[0].friendRequests);
-            for (i = 0; i < friendIdArray.length; i++) {
-                friendObjects.push(Meteor.users.findOne( friendIdArray[i] ));
+            var friendRequestArray = requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
+            console.log(friendRequestArray.length);
+            for (i = 0; i < friendRequestArray.length; i++) {
+                
+                friendObjects.push(friendRequestArray[i]);
             }
-
+            console.log(friendObjects);
             return friendObjects
         }
     });
@@ -224,8 +225,13 @@ if (Meteor.isClient) {
             //if friend is a real person
             if (friendToAdd.length == 1) {
                 //if friend is not in friendlist, then send invite
-                if (user_settings.find({ id: Meteor.userId() }).fetch().length == 0) {
-                    requests.insert({ id: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
+                if (user_settings.find({ userId: Meteor.userId() }).fetch().length == 0) {
+                    console.log("adding friend");
+                    //if requests for this user is empty, init friend request list for user
+                    if(requests.find({ userId: Meteor.userId() }).fetch().length == 0){
+                        requests.insert({ userId: Meteor.userId() });
+                    }
+                    requests.update({ userId: Meteor.userId() }, { $addToSet: { friendRequests: friendToAdd }});
                     //user_settings.insert({ id: Meteor.userId(), friendList: [friendToAddId] });
                     //console.log(user_settings.find().fetch());
                 }
