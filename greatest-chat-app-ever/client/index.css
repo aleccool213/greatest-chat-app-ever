@@ -234,6 +234,10 @@ body {
 	vertical-align: middle;
 }
 
+.requests-list {
+	width: 300px;
+}
+
 .request-item .avatar {
 	height: 20px;
 	border-radius: 2px;

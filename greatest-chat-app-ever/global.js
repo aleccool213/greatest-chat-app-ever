@@ -19,6 +19,7 @@ if (Meteor.isClient) {
     })
 
     Template.friendList.helpers({
+        // [ ] return an array of the logged in user's friends
         friends: function() {
             var friendObjects = []
             var friendIdArray = user_settings.find( { id: Meteor.userId() } ).fetch()[0].friendList;
@@ -31,18 +32,22 @@ if (Meteor.isClient) {
     });
 
     Template.greetingList.helpers({
+        // [ ] return greetings that belong to the user or any of the the user's friends
         greetings: function() {
             return greetings.find({},{sort: {dateCreated: -1}}).fetch();
         }
     });
 
     Template.friendRequests.helpers({
+        // [ ] return all the requests that are directed to the user from someone that isn't a friend
         requests: function() { 
-            return requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests;
+            console.log()
+            return requests.find( { userId: Meteor.userId() } ).fetch()[0].friendRequests[1];
         }
     });
 
     Template.chatRooms.helpers({
+        // [ ] return all the chatrooms that the user is a part of
         chatRooms: function() {
             //return array of chat room ids
             return chatRoom.find({ userIds: { $in: [Meteor.userId()] }}, { _id: true }).fetch()
@@ -50,6 +55,7 @@ if (Meteor.isClient) {
     })
 
     Template.chatHeader.helpers({
+        // [ ] return the members in the active chat, minus the logged in user
         chatName: function(){
             
             return "First Lastname"
@@ -58,6 +64,7 @@ if (Meteor.isClient) {
     })
 
     Template.chatRoomNumber.events({
+        // [ ] set the active chat session to the chat_id of the chatroom item that was clicked
         "click .chatroom-item": function () {
             // Set the checked property to the opposite of its current value
             console.log(this._id.toString());
@@ -83,6 +90,7 @@ if (Meteor.isClient) {
 
 
     Template.body.helpers({
+        // [ ] return true if there is an active chat right now
         validChat: function(){
             return Session.get("currentRoomId")
         }
@@ -90,6 +98,7 @@ if (Meteor.isClient) {
 
 
     Template.chatRoomMessages.helpers({
+        // return the chat messages from a certain user that have the active chatroom's id in their chatroom_id field
         chatMessages: function(){
             var messagesArray = []
 
@@ -283,7 +292,7 @@ if (Meteor.isClient) {
                 var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0];
                 Session.set("currentRoomId", currentRoom._id);
             } 
-        },
+        },     
 
         addFriendFromRequest: function(userToAdd){
             //get the user object
