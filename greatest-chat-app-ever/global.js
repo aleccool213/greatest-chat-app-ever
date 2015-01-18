@@ -25,7 +25,6 @@ if (Meteor.isClient) {
         }
     });
 
-
     Template.listOfOverallUsers.helpers({
         userInCollection: function(){
             return Meteor.users.find();
@@ -190,7 +189,8 @@ if (Meteor.isClient) {
         "click .chatroom-item": function () {
             // Set the checked property to the opposite of its current value
             console.log(this._id.toString());
-            console.log("button is clicked!");
+            var objDiv = document.getElementById("messageWindow");
+            objDiv.scrollTop = objDiv.scrollHeight + 42;
             Session.set("currentRoomId", this._id);
             $("#userMessage").focus();
           }
