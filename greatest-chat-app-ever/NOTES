@@ -1,0 +1,41 @@
+NOTES
+when you add a chat, check what the ID of the active chat is, and then add that as the chat's chatroomID field
+
+USERSETTINGS
+======
+{
+	_id: objectID,
+	all the other stuff you: get with the user model,
+	friendList: [ userID ]
+	requests: [ userID ],
+	chatroomList: [ chatroomIDs ]
+
+}
+
+MESSAGES
+=========
+{
+	_id: objectID,
+	chatroomId: chatroom Object's ID
+	createdAt: new Date(),
+	author: ID of the user that wrote it,
+	content: text of the message,
+}
+
+GREETINGS
+==========
+{
+	_id: objectID,
+	author: ID of the user that wrote it,
+	content: text of the message,
+	createdAt: new Date(),
+
+}
+
+CHATROOM
+=========
+{
+	_id: objectID,
+	members: [userID, userID],
+
+}
