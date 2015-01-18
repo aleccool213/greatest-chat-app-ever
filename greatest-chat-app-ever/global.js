@@ -287,10 +287,9 @@ if (Meteor.isClient) {
                 var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0];
                 Session.set("currentRoomId", currentRoom._id);
             } 
-        }       
+        },      
 
         addFriendFromRequest: function(userToAdd){
-
             //get the user object
             var temp = Meteor.users.find({_id: userToAdd});
             //add to friends list
