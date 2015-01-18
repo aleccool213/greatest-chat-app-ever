@@ -28,7 +28,6 @@ if (Meteor.isClient) {
         }
     });
 
-    
 
     Template.greetingList.helpers({
         greetings: function() {
@@ -46,22 +45,9 @@ if (Meteor.isClient) {
 
     Template.chatHeader.helpers({
         chatName: function(){
-            
             return "First Lastname"
-
         }
     })
-
-    
-
-    // Template.chatRoom.events({
-    //     "keyup .message-input" : function(event) {
-    //         if (event.which == 13 && !event.shiftKey) {
-    //             Meteor.call('addMessage', this._id, $(".message-input").val())
-    //         }
-    //     },
-    // });
-
     
 
     Template.chatRoomNumber.helpers({
@@ -150,8 +136,20 @@ if (Meteor.isClient) {
                 $(".pillar-open-chats").toggleClass("coyote")
                 $(".pillar-header").toggleClass("coyote")
                 $(".greeting-item").toggleClass("coyote")
+            } else if (message == '/starwars'){
+                Meteor.call('starwarsMod', function(error, result) {
+                    console.log(JSON.parse(result.content).name)
+                    messages.insert({
+                        owner: Meteor.user(),
+                        userMessages: JSON.parse(result.content).name,
+                        dateCreated: new Date(),
+                        currChatRoom: Session.get("currentRoomId")
+                    })
+                })
+            } 
 
-            } else {
+
+            else {
                 messages.insert({
                     owner: Meteor.user(),                
                     userMessages: message,
@@ -285,9 +283,15 @@ if (Meteor.isServer) {
             id = Math.floor((Math.random() * 718) + 1);
             url = 'http://pokeapi.co/api/v1/pokemon/' + id
             return Meteor.http.call('GET', url)
+        },      
 
+
+        starwarsMod: function() {
+            this.unblock()
+            id = Math.floor((Math.random() * 82) + 1);
+            url = 'http://swapi.co/api/people/' + id;
+            return Meteor.http.call('GET', url);
         }       
-
     });
 
 }
