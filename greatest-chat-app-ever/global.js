@@ -59,15 +59,13 @@ if (Meteor.isClient) {
 
     Template.userChatMessageIn.events({
         "submit .new-message": function(){
-            var charRoomId = event.target.chatRoomId.value;
             var message = event.target.chatText.value;
             console.log("message submitted:"+message);
             messages.insert({
                 owner: Meteor.user(),                
                 userMessages: message,
                 dateCreated: new Date(),
-                currChatRoom: ""
-
+                currChatRoom: Session.get("currentRoomId")
             });
 
             //Clear Form
@@ -80,10 +78,10 @@ if (Meteor.isClient) {
     Template.chatRoomMessages.helpers({
             chatMessages: function(){
                 var chatMessages = []
-                var messagesArray = messages.find({_id: Session.get("currentRoomId")}).fetch();
+                var messagesArray = messages.find({currChatRoom: Session.get("currentRoomId")}).fetch();
                 console.log(messageArray);
                 return messagesArray;
-            }    
+            }
     });
 
 // =======================================
