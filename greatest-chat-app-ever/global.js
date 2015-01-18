@@ -254,12 +254,9 @@ if (Meteor.isClient) {
             else{
                 messages.insert({ parent: chatRoomID, content: messageContent, dateCreated: new Date(), owner: Meteor.userId() });
             }
-            
-
         },
 
         checkChat: function(userID){
-            
             var temp = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()
             var temp2 = chatRoom.find({ userIds: [userID, Meteor.userId()] }).fetch()
             console.log("temp: " + temp);
@@ -267,15 +264,20 @@ if (Meteor.isClient) {
             if (temp.length == 1){
                 Session.set("currentRoomId", temp._id);
             }
-            else if(temp2.lenght == 1){
+            else if(temp2.length == 1){
                 Session.set("currentRoomId", temp2._id)
             }
             else{
+                
                 chatRoom.insert({ userIds: [Meteor.userId(), userID], modsActivated: [] });
-                var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0]
+                var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0];
                 Session.set("currentRoomId", currentRoom._id);
             } 
         }       
+
+        addFriendFromRequest: function(){
+            return 0;
+        }
 
     });
 
