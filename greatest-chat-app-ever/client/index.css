@@ -3,6 +3,10 @@ body {
 }
 
 
+#login-buttons {
+	margin-right: 165px;
+}
+
 /*k COLOR: #425523 */
 
 .flex-wrap {
@@ -228,4 +232,9 @@ body {
 	height: 15px;
 	border-radius: 2px;
 	vertical-align: middle;
+}
+
+.request-item .avatar {
+	height: 20px;
+	border-radius: 2px;
 }
