@@ -41,7 +41,7 @@
 						Open Chats
 					</div>
 					<ul class="open-chats-list">
-						{{> openChatList }}
+						{{> chatRooms }}
 					</ul>
 				</div>
 				<div class="pillar-messages">
@@ -51,20 +51,14 @@
 					<ul class="pillar-list messages-list">
 						{{> chatRoomMessages }}
 					</ul>
-					{{> userChatMessageIn }}
+					{{#if validChat}}
+						{{> userChatMessageIn }}
+					{{/if}}
 				</div>
 
 			</div>
   		</div>
   	</div>
-
-  {{> greetingList}}
-
-  <p>Chat Rooms</p>
-  {{> chatRooms}}
-
-  <p>Sent Messages: </p>
-  {{> chatRoomMessages}}
 
 </body>
 
@@ -142,26 +136,14 @@
 </template>
 
 <template name="chatRoomNumber">
-	<ul>
-		<li> 
-			<button type="checkbox" class="toggle-checked" >
-				{{_id}}
-			</button>
-		</li>
-	</ul>
+	<li> 
+		<button type="checkbox" class="toggle-checked" >{{_id}}</button>
+	</li>
 </template>
 
 
 <template name="chatHeader">
 	<!-- return name of other person in the chat -->
-</template>
-
-<template name="openChatList">
-	<!-- return list of all the open chats -->
-</template>
-
-<template name="openChat">
-	<!-- each individual open chat item -->
 </template>
 
 <template name="chatRoomMessages">
@@ -176,13 +158,12 @@
 	 	<span class="name">{{owner.profile.name}}</span>
 	 	<span class="date">{{prettifyDate dateCreated}}</span>
  		<p class="content">{{userMessages}}</p>
-
-
 	 </div>
 </template>
 
 <template name="userChatMessageIn">
 	<form class="new-message">
+
 			<div name="chatRoomId" style="display: none;"></div>
 			<input type="text" id="userMessage" name="chatText" placeholder="What do you have to say?">
 

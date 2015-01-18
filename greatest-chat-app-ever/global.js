@@ -77,13 +77,27 @@ if (Meteor.isClient) {
     });
 
 
+    Template.body.helpers({
+        validChat: function(){
+            return Session.get("currentRoomId")
+        }
+    })
+
+
     Template.chatRoomMessages.helpers({
-            chatMessages: function(){
-                var chatMessages = []
-                var messagesArray = messages.find({currChatRoom: Session.get("currentRoomId")}).fetch();
-                console.log(messagesArray);
-                return messagesArray;
+        chatMessages: function(){
+            var messagesArray = []
+
+            if (Session.get("currentRoomId") != undefined) {
+                messagesArray = messages.find({currChatRoom: Session.get("currentRoomId")});
+                console.log("currentRoomId: " + Session.get("currentRoomId"))
+                console.log("messagesArray: " + messagesArray.fetch()[0]);
             }
+
+            return messagesArray;
+
+            
+        }
     });
 
 // =======================================
