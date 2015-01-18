@@ -20,7 +20,6 @@ if (Meteor.isClient) {
         friends: function() {
             var friendObjects = []
             var friendIdArray = user_settings.find( { id: Meteor.userId() } ).fetch()[0].friendList;
-            console.log(friendIdArray);
             for (i = 0; i < friendIdArray.length; i++) {
                 friendObjects.push(Meteor.users.findOne( friendIdArray[i] ));
             }
@@ -81,8 +80,8 @@ if (Meteor.isClient) {
     Template.chatRoomMessages.helpers({
             chatMessages: function(){
                 var chatMessages = []
-                var messagesArray = messages.find({}).fetch()
-
+                var messagesArray = messages.find({_id: Session.get("currentRoomId")}).fetch();
+                console.log(messageArray);
                 return messagesArray;
             }    
     });
@@ -128,6 +127,7 @@ if (Meteor.isClient) {
     Handlebars.registerHelper("chatRoomHelper", function(chatRoomID){
         return messages.find({ currChatRoom: chatRoomID }).fetch();
     })
+
 }
 
 // =======================================
