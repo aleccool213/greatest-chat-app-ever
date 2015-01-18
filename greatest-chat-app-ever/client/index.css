@@ -78,6 +78,7 @@ body {
 .friend-item:hover {
 	cursor: pointer;
 	cursor: hand;
+	background-color: #fafafa;
 }
 
 .friend-item:hover .see-greetings-button {
@@ -93,6 +94,11 @@ body {
 	transition: opacity 250ms ease-in-out;
 }
 
+.see-greetings-button span {
+	position: relative;
+	top: -2px;
+}
+
 .friend-item .see-greetings-button:hover {
 	opacity: 1;
 	transition: opacity 250ms ease-in-out;
@@ -102,6 +108,12 @@ body {
 	padding: 6px 14px;
 	position: relative;
 	border-bottom: 1px solid #f0f0f0;
+}
+
+.greeting-item:hover {
+	cursor: hand;
+	cursor: pointer;
+	background-color: #fafafa;
 }
 
 .greeting-item .avatar {
