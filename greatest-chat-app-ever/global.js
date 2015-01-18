@@ -121,7 +121,7 @@ if (Meteor.isClient) {
     Template.addFriendModalTemplate.events({
         "keyup #addFriendInput": function(event){
             if (event.which == 13) {
-                Meteor.call('sendRequest', $("#addFriendInput").val())
+                Meteor.call('addFriendCheatCode', $("#addFriendInput").val())
                 $("#addFriendInput").val('')
                 $("#addFriendModal").modal('hide')
             }
@@ -301,6 +301,10 @@ if (Meteor.isClient) {
             user_settings.update({id: Meteor.userId()}, {$addToSet: {friendList: temp} });
             //remove from both this user and the user who is getting accepted 
             requests.update({userId: Meteor.userId()}, {$pull: {requestList: temp._id}});
+        },
+
+        addFriendCheatCode: function(userToAdd){
+
         }
 
     });
