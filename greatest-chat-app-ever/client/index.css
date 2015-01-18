@@ -3,6 +3,8 @@ body {
 }
 
 .flex-wrap {
+	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 
 }
@@ -26,28 +28,38 @@ body {
 }
 
 .pillar-friends {
-	flex: 0 1 200px;
+	-webkit-flex: 0 1 200px;
+	    -ms-flex: 0 1 200px;
+	        flex: 0 1 200px;
 	margin-right: 20px;
 }
 
 .pillar-greetings {
-	flex: 0 1 300px;
+	-webkit-flex: 0 1 300px;
+	    -ms-flex: 0 1 300px;
+	        flex: 0 1 300px;
 	margin-right: 20px;
 }
 
 .pillar-chatroom {
-	flex: 1 0 auto;
+	-webkit-flex: 1 0 auto;
+	    -ms-flex: 1 0 auto;
+	        flex: 1 0 auto;
 }
 
 .pillar-open-chats {
-	flex: 0 1 150px;
+	-webkit-flex: 0 1 150px;
+	    -ms-flex: 0 1 150px;
+	        flex: 0 1 150px;
 	height: 85vh;
 	border-right: 1px solid #f0f0f0;
 }
 
 .pillar-messages {
 	position: relative;
-	flex: 1 0 auto;
+	-webkit-flex: 1 0 auto;
+	    -ms-flex: 1 0 auto;
+	        flex: 1 0 auto;
 }
 
 .pillar-header {

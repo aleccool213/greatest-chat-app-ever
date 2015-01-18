@@ -46,7 +46,7 @@
 				</div>
 				<div class="pillar-messages">
 					<div class="pillar-header chat-header">
-  						FIRST LASTNAME {{> chatHeader }}
+  						{{> chatHeader }}
   					</div>
 					<ul class="pillar-list messages-list">
 						{{> chatRoomMessages }}
@@ -142,9 +142,8 @@
 	</li>
 </template>
 
-
 <template name="chatHeader">
-	<!-- return name of other person in the chat -->
+	<span>{{ chatName }}</span>
 </template>
 
 <template name="chatRoomMessages">

@@ -53,7 +53,15 @@ if (Meteor.isClient) {
     Template.chatRooms.helpers({
         chatRooms: function() {
             //return array of chat room ids
-            return chatRoom.find({}, { _id: true }).fetch();
+            return chatRoom.find({}, { _id: true }).fetch()
+        }
+    })
+
+    Template.chatHeader.helpers({
+        chatName: function(){
+            
+            return "First Lastname"
+
         }
     })
 
@@ -232,7 +240,8 @@ if (Meteor.isClient) {
             }
             else{
                 chatRoom.insert({ userIds: [Meteor.userId(), userID], modsActivated: [] });
-                Session.set("currentRoomId", chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0]._id);
+                var currentRoom = chatRoom.find({ userIds: [Meteor.userId(), userID] }).fetch()[0]
+                Session.set("currentRoomId", currentRoom._id);
             } 
         }       
 
